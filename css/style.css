@@ -191,8 +191,13 @@ main {
   border-radius: 999px;
 }
 
-.start-btn {
+.mode-btns {
   margin-top: auto;
+  display: grid;
+  gap: 8px;
+}
+
+.start-btn {
   background: var(--accent);
   color: #fff;
   border: none;
@@ -203,6 +208,16 @@ main {
   transition: background 0.15s ease;
 }
 .start-btn:hover { background: var(--accent-dark); }
+
+.start-btn-alt {
+  background: #fff;
+  color: var(--navy);
+  border: 1.5px solid var(--border);
+}
+.start-btn-alt:hover {
+  background: #f2f5fb;
+  border-color: var(--navy-light);
+}
 
 .tips-card {
   margin-top: 26px;

@@ -33,24 +33,30 @@
         <span class="code">EXAM 220-1101</span>
         <h3>Core 1</h3>
         <ul class="facts">
-          <li><strong id="count-core1">50</strong> practice questions in this set</li>
+          <li><strong id="count-core1">100</strong> practice questions in the bank</li>
           <li>Real exam: up to <strong>90 questions</strong> in <strong>90 minutes</strong></li>
           <li>Real exam passing score: <strong>675</strong> / 900</li>
         </ul>
         <div class="domain-bars" id="domains-core1"></div>
-        <button class="start-btn" data-start-exam="core1" type="button">Start Core 1 Practice Test</button>
+        <div class="mode-btns">
+          <button class="start-btn" data-start-exam="core1" data-mode="fixed" type="button">Start Fixed-Length Test</button>
+          <button class="start-btn start-btn-alt" data-start-exam="core1" data-mode="continuous" type="button">Start Continuous Practice</button>
+        </div>
       </div>
 
       <div class="exam-card">
         <span class="code">EXAM 220-1102</span>
         <h3>Core 2</h3>
         <ul class="facts">
-          <li><strong id="count-core2">48</strong> practice questions in this set</li>
+          <li><strong id="count-core2">96</strong> practice questions in the bank</li>
           <li>Real exam: up to <strong>90 questions</strong> in <strong>90 minutes</strong></li>
           <li>Real exam passing score: <strong>700</strong> / 900</li>
         </ul>
         <div class="domain-bars" id="domains-core2"></div>
-        <button class="start-btn" data-start-exam="core2" type="button">Start Core 2 Practice Test</button>
+        <div class="mode-btns">
+          <button class="start-btn" data-start-exam="core2" data-mode="fixed" type="button">Start Fixed-Length Test</button>
+          <button class="start-btn start-btn-alt" data-start-exam="core2" data-mode="continuous" type="button">Start Continuous Practice</button>
+        </div>
       </div>
     </div>
 
@@ -58,6 +64,8 @@
       <h4>How this study guide works</h4>
       <ul>
         <li>Pick Core 1 or Core 2 — questions are pulled only from that exam's domains.</li>
+        <li><strong>Fixed-Length Test</strong> runs through the entire question bank once, in a new random order, then scores you.</li>
+        <li><strong>Continuous Practice</strong> has no set length — it keeps serving freshly randomized questions (cycling back through the bank in a new shuffled order each lap) until you click <strong>Finish &amp; See Results</strong>, whenever you're ready to stop.</li>
         <li>Select an answer, then click <strong>Check Answer</strong> to see if you're right or wrong.</li>
         <li>Wrong answers are highlighted in <strong style="color:#c5221f;">red</strong>, and the correct answer is highlighted in <strong style="color:#1e8e3e;">green</strong>, with a short explanation.</li>
         <li>Keyboard shortcuts: press <strong>1–4</strong> to select an answer, <strong>Enter</strong> to check or move on.</li>
@@ -72,10 +80,10 @@
       <span id="quiz-exam-name" class="domain-tag" style="background:#374a68;"></span>
       <div class="progress-wrap">
         <div class="progress-label">
-          <span>Question <span id="q-progress-label-current">1</span> of <span id="q-progress-label-total">50</span></span>
+          <span>Question <span id="q-progress-label-current">1</span><span id="q-progress-total-wrap"> of <span id="q-progress-label-total">50</span></span></span>
           <span id="q-score-tag" class="score-tag">Score so far: 0/0</span>
         </div>
-        <div class="progress-track"><div class="progress-fill" id="q-progress-fill" style="width:0%"></div></div>
+        <div class="progress-track" id="progress-track"><div class="progress-fill" id="q-progress-fill" style="width:0%"></div></div>
       </div>
       <span class="domain-tag" id="q-domain-tag">Domain</span>
     </div>
@@ -89,6 +97,7 @@
 
       <div class="quiz-actions">
         <button class="btn btn-secondary" id="exit-quiz-btn" type="button">Exit</button>
+        <button class="btn btn-secondary" id="finish-btn" type="button" hidden disabled>Finish &amp; See Results</button>
         <button class="btn btn-primary" id="check-btn" type="button" disabled>Check Answer</button>
         <button class="btn btn-primary" id="next-btn" type="button" hidden>Next Question</button>
       </div>

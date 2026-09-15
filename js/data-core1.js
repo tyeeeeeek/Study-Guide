@@ -468,5 +468,525 @@ const CORE1_QUESTIONS = [
     ],
     answer: 1,
     explanation: "A burning smell is a fire and safety hazard. The system should be powered off and unplugged immediately, and the PSU should be replaced rather than repaired."
+  },
+
+  // ---------------- Mobile Devices (set 2) ----------------
+  {
+    id: "c1-md-11",
+    domain: "Mobile Devices",
+    question: "Which port is commonly used for wired Ethernet networking on a laptop docking station?",
+    choices: ["RJ-11", "RJ-45", "USB-A", "3.5mm audio jack"],
+    answer: 1,
+    explanation: "RJ-45 is the standard connector for wired Ethernet networking, commonly built into docking stations to give laptops a wired network option."
+  },
+  {
+    id: "c1-md-12",
+    domain: "Mobile Devices",
+    question: "A company wants to prevent unauthorized apps from being installed on corporate-owned smartphones. What should be configured?",
+    choices: ["Screen lock only", "App store restrictions enforced via an MDM policy", "Airplane mode", "Bluetooth pairing"],
+    answer: 1,
+    explanation: "MDM platforms can restrict which apps or app stores are allowed on a managed device, preventing installation of unauthorized software."
+  },
+  {
+    id: "c1-md-13",
+    domain: "Mobile Devices",
+    question: "Which laptop display technology is known for wide viewing angles and accurate color reproduction compared to older TN panels?",
+    choices: ["IPS", "CRT", "Plasma", "VFD"],
+    answer: 0,
+    explanation: "IPS (In-Plane Switching) panels offer better color accuracy and much wider viewing angles than older TN (Twisted Nematic) panels."
+  },
+  {
+    id: "c1-md-14",
+    domain: "Mobile Devices",
+    question: "A tablet's touchscreen is unresponsive in one corner, but the display still shows images correctly. Which component most likely needs replacement?",
+    choices: ["Battery", "Digitizer", "Speaker", "SIM card"],
+    answer: 1,
+    explanation: "Since the display still shows images correctly but touch input fails, the digitizer (the touch-sensing layer) is the most likely faulty component."
+  },
+  {
+    id: "c1-md-15",
+    domain: "Mobile Devices",
+    question: "What is the purpose of location/geotracking services on a mobile device?",
+    choices: [
+      "It increases battery life",
+      "It determines the device's physical location for apps like maps and Find My Device",
+      "It encrypts data stored on the device",
+      "It improves Wi-Fi signal strength"
+    ],
+    answer: 1,
+    explanation: "Location services use GPS and other signals to determine a device's physical position, enabling features like navigation and remote device location."
+  },
+  {
+    id: "c1-md-16",
+    domain: "Mobile Devices",
+    question: "Which accessory allows a laptop to connect to multiple external monitors, wired Ethernet, and USB devices through a single cable?",
+    choices: ["A KVM switch", "A docking station", "A cellular modem", "A Bluetooth dongle"],
+    answer: 1,
+    explanation: "A docking station consolidates multiple peripheral and display connections into a single cable connection to the laptop."
+  },
+  {
+    id: "c1-md-17",
+    domain: "Mobile Devices",
+    question: "A technician is replacing a laptop's SODIMM memory module. What does SODIMM refer to?",
+    choices: [
+      "A type of hard drive",
+      "A small outline dual in-line memory module, used in laptops and small-form-factor devices",
+      "A CPU socket type",
+      "A wireless networking standard"
+    ],
+    answer: 1,
+    explanation: "SODIMM stands for Small Outline Dual In-line Memory Module, the compact RAM form factor used in laptops, unlike the larger DIMMs used in desktops."
+  },
+  {
+    id: "c1-md-18",
+    domain: "Mobile Devices",
+    question: "Which setting helps prevent a mobile device from automatically connecting to unknown or potentially rogue Wi-Fi networks?",
+    choices: [
+      "Auto-join enabled only for previously trusted/known networks",
+      "Auto-join enabled for any open network",
+      "Airplane mode permanently on",
+      "Bluetooth discoverability enabled"
+    ],
+    answer: 0,
+    explanation: "Restricting auto-join to known, trusted networks prevents a device from silently connecting to open or malicious networks that mimic legitimate ones."
+  },
+  {
+    id: "c1-md-19",
+    domain: "Mobile Devices",
+    question: "How does Mobile Application Management (MAM) differ from full Mobile Device Management (MDM)?",
+    choices: [
+      "MAM manages the entire device, including personal apps and settings",
+      "MAM manages and secures only specific corporate applications and their data on a device",
+      "MAM completely replaces the device's operating system",
+      "MAM blocks all cellular data on the device"
+    ],
+    answer: 1,
+    explanation: "MAM focuses narrowly on managing and securing corporate applications and their data, without taking control of the entire device the way full MDM does."
+  },
+  {
+    id: "c1-md-20",
+    domain: "Mobile Devices",
+    question: "A user's phone battery is draining unusually fast. What is a reasonable FIRST troubleshooting step?",
+    choices: [
+      "Replace the phone immediately",
+      "Check battery usage statistics to identify which apps are consuming excess power",
+      "Perform a factory reset without any investigation",
+      "Remove the SIM card"
+    ],
+    answer: 1,
+    explanation: "Reviewing battery usage statistics first helps identify a specific misbehaving app or setting before resorting to drastic measures like a factory reset or replacement."
+  },
+
+  // ---------------- Networking (set 2) ----------------
+  {
+    id: "c1-net-11",
+    domain: "Networking",
+    question: "Which protocol securely transfers files over an encrypted connection, serving as a secure alternative to standard FTP?",
+    choices: ["TFTP", "SFTP", "SNMP", "SMTP"],
+    answer: 1,
+    explanation: "SFTP (SSH File Transfer Protocol) encrypts file transfers over an SSH connection, unlike standard FTP which sends data in cleartext."
+  },
+  {
+    id: "c1-net-12",
+    domain: "Networking",
+    question: "What is the purpose of a port forwarding rule on a firewall or router?",
+    choices: [
+      "It blocks all inbound traffic to the network",
+      "It directs incoming traffic on a specific port to a specific internal device",
+      "It encrypts all outbound traffic automatically",
+      "It assigns IP addresses to devices"
+    ],
+    answer: 1,
+    explanation: "Port forwarding maps a specific external port to an internal device's IP address and port, allowing external traffic to reach an internal service."
+  },
+  {
+    id: "c1-net-13",
+    domain: "Networking",
+    question: "Which IPv4 address range is reserved for private, non-routable networks, such as 192.168.x.x?",
+    choices: ["Public addressing", "Private addressing (RFC 1918)", "Multicast addressing", "Loopback addressing"],
+    answer: 1,
+    explanation: "RFC 1918 reserves specific address ranges (including 192.168.0.0/16, 10.0.0.0/8, and 172.16.0.0/12) for private networks that are not routed on the public internet."
+  },
+  {
+    id: "c1-net-14",
+    domain: "Networking",
+    question: "A technician needs to test whether a remote host is reachable and measure round-trip response time. Which command should be used?",
+    choices: ["ping", "ipconfig", "netstat", "nslookup"],
+    answer: 0,
+    explanation: "The ping command sends ICMP echo requests to a host and reports whether it responds along with round-trip time, making it the standard basic connectivity test."
+  },
+  {
+    id: "c1-net-15",
+    domain: "Networking",
+    question: "In a star network topology, what role does the central device (such as a switch) play?",
+    choices: [
+      "It is the single point all other devices connect to and communicate through",
+      "It only connects to one other device in a chain",
+      "It terminates the bus at each end",
+      "It repeats signals around a closed ring"
+    ],
+    answer: 0,
+    explanation: "In a star topology, every device connects individually to a central point (typically a switch), which all traffic passes through."
+  },
+  {
+    id: "c1-net-16",
+    domain: "Networking",
+    question: "What does the acronym SSID refer to in wireless networking?",
+    choices: [
+      "A type of wireless encryption",
+      "The network name broadcast by a wireless access point to identify the network",
+      "A device's MAC address",
+      "A firewall rule"
+    ],
+    answer: 1,
+    explanation: "The SSID (Service Set Identifier) is the human-readable name of a wireless network, which is what users select when connecting to Wi-Fi."
+  },
+  {
+    id: "c1-net-17",
+    domain: "Networking",
+    question: "Which tool would a technician use to determine the path (hops) that packets take to reach a destination?",
+    choices: ["ping", "tracert / traceroute", "ipconfig", "netstat"],
+    answer: 1,
+    explanation: "tracert (Windows) or traceroute (Linux/macOS) shows each hop a packet passes through on its way to a destination, useful for diagnosing routing issues."
+  },
+  {
+    id: "c1-net-18",
+    domain: "Networking",
+    question: "A device combines multiple internet connections to provide load balancing and failover for a network. What class of device is this?",
+    choices: ["A standard switch", "A load-balancing/multi-WAN router", "A hub", "A repeater"],
+    answer: 1,
+    explanation: "A multi-WAN router or dedicated load balancer can combine multiple internet connections, distributing traffic across them and failing over if one connection drops."
+  },
+  {
+    id: "c1-net-19",
+    domain: "Networking",
+    question: "Which port is used by default for unencrypted SMTP email transmission between mail servers?",
+    choices: ["25", "110", "143", "443"],
+    answer: 0,
+    explanation: "Port 25 is the traditional default port for SMTP (Simple Mail Transfer Protocol), used for sending email between mail servers."
+  },
+  {
+    id: "c1-net-20",
+    domain: "Networking",
+    question: "What is the main advantage of using a mesh Wi-Fi system over a single wireless router in a large home?",
+    choices: [
+      "It is always less expensive",
+      "It provides extended, more even wireless coverage across a larger area",
+      "It only improves wired network speeds",
+      "It eliminates the need for any cabling anywhere"
+    ],
+    answer: 1,
+    explanation: "A mesh Wi-Fi system uses multiple coordinated access points to extend coverage more evenly throughout a large space than a single router could achieve alone."
+  },
+
+  // ---------------- Hardware (set 2) ----------------
+  {
+    id: "c1-hw-11",
+    domain: "Hardware",
+    question: "Which expansion slot standard is commonly used for installing modern graphics cards?",
+    choices: ["PCI", "PCIe", "AGP", "ISA"],
+    answer: 1,
+    explanation: "PCI Express (PCIe) is the current standard expansion slot used for graphics cards and other high-bandwidth add-in cards on modern motherboards."
+  },
+  {
+    id: "c1-hw-12",
+    domain: "Hardware",
+    question: "What is the purpose of an M.2 slot on a modern motherboard?",
+    choices: [
+      "It connects a mouse or keyboard",
+      "It connects high-speed SSDs (NVMe or SATA) directly to the motherboard",
+      "It provides additional USB ports",
+      "It connects a printer"
+    ],
+    answer: 1,
+    explanation: "M.2 slots allow small, high-speed SSDs to connect directly to the motherboard, often supporting the much faster NVMe protocol over PCIe."
+  },
+  {
+    id: "c1-hw-13",
+    domain: "Hardware",
+    question: "Which tool should be used to properly remove a stripped screw from a computer case?",
+    choices: ["A flathead screwdriver of the wrong size", "A screw extractor tool", "Pliers to strip it further", "A magnet only"],
+    answer: 1,
+    explanation: "A screw extractor is specifically designed to grip and remove screws whose heads have been stripped, without further damaging the screw or surrounding material."
+  },
+  {
+    id: "c1-hw-14",
+    domain: "Hardware",
+    question: "What is the function of a heatsink on a computer component?",
+    choices: [
+      "It stores data",
+      "It dissipates heat away from a component like the CPU or GPU",
+      "It regulates voltage",
+      "It provides wireless connectivity"
+    ],
+    answer: 1,
+    explanation: "A heatsink draws heat away from a hot component and dissipates it into the surrounding air, often paired with a fan for active cooling."
+  },
+  {
+    id: "c1-hw-15",
+    domain: "Hardware",
+    question: "Which of the following is generally true about solid-state drives (SSDs) compared to traditional hard disk drives (HDDs)?",
+    choices: [
+      "SSDs have moving mechanical parts, just like HDDs",
+      "SSDs are generally faster and more resistant to physical shock than HDDs",
+      "SSDs always have less storage capacity than HDDs",
+      "SSDs cannot be used as the primary OS drive"
+    ],
+    answer: 1,
+    explanation: "SSDs use flash memory with no moving parts, making them faster and more resistant to physical shock than mechanical HDDs."
+  },
+  {
+    id: "c1-hw-16",
+    domain: "Hardware",
+    question: "A technician wants to add storage capacity using RAID for improved performance, without needing redundancy. Which RAID level should be used?",
+    choices: ["RAID 0", "RAID 1", "RAID 5", "RAID 6"],
+    answer: 0,
+    explanation: "RAID 0 stripes data across multiple drives for improved performance and combined capacity, but provides no redundancy — a single drive failure loses all data."
+  },
+  {
+    id: "c1-hw-17",
+    domain: "Hardware",
+    question: "Which power connector supplies supplemental power directly to the motherboard to support CPU operation?",
+    choices: ["The 24-pin ATX connector", "The 4/8-pin CPU (EPS) connector", "A SATA power connector", "A Molex connector"],
+    answer: 1,
+    explanation: "The 4-pin or 8-pin EPS/CPU power connector delivers dedicated power specifically for the CPU, separate from the main 24-pin ATX motherboard connector."
+  },
+  {
+    id: "c1-hw-18",
+    domain: "Hardware",
+    question: "What is the purpose of a KVM switch?",
+    choices: [
+      "It manages network traffic between subnets",
+      "It allows one keyboard, video monitor, and mouse to control multiple computers",
+      "It increases a system's RAM capacity",
+      "It provides surge protection"
+    ],
+    answer: 1,
+    explanation: "A KVM (Keyboard, Video, Mouse) switch lets a single set of peripherals control multiple computers, switching between them as needed."
+  },
+  {
+    id: "c1-hw-19",
+    domain: "Hardware",
+    question: "Which type of printer uses a striking mechanism against an ink ribbon, often used for multi-part carbon forms?",
+    choices: ["Inkjet", "Laser", "Impact/dot-matrix", "Thermal"],
+    answer: 2,
+    explanation: "Impact (dot-matrix) printers physically strike an ink ribbon against paper, which is why they remain useful for printing multi-part carbonless forms."
+  },
+  {
+    id: "c1-hw-20",
+    domain: "Hardware",
+    question: "A technician is upgrading a PC's CPU. What should be checked FIRST before purchasing a new CPU?",
+    choices: ["The case color", "Motherboard socket compatibility", "Monitor resolution", "Keyboard layout"],
+    answer: 1,
+    explanation: "A new CPU must be physically and electrically compatible with the motherboard's socket type, so this must be verified before any purchase."
+  },
+
+  // ---------------- Virtualization and Cloud Computing (set 2) ----------------
+  {
+    id: "c1-vc-11",
+    domain: "Virtualization and Cloud Computing",
+    question: "What term describes running an application in an isolated user-space instance that shares the host OS kernel, as a lighter-weight alternative to a full VM?",
+    choices: ["Hypervisor", "Container", "Sandbox drive", "Partition"],
+    answer: 1,
+    explanation: "Containers package an application with its dependencies while sharing the host OS kernel, making them more lightweight than full virtual machines."
+  },
+  {
+    id: "c1-vc-12",
+    domain: "Virtualization and Cloud Computing",
+    question: "Which cloud characteristic allows customers to provision computing resources on-demand without requiring human interaction with the provider?",
+    choices: ["Resource pooling", "On-demand self-service", "Measured service", "Broad network access"],
+    answer: 1,
+    explanation: "On-demand self-service lets customers automatically provision resources like server time or storage as needed, without contacting the provider directly."
+  },
+  {
+    id: "c1-vc-13",
+    domain: "Virtualization and Cloud Computing",
+    question: "What is a common reason an organization uses Virtual Desktop Infrastructure (VDI)?",
+    choices: [
+      "To eliminate the need for any network connection",
+      "To centrally host and manage desktop environments that users access remotely",
+      "To replace all physical servers with laptops",
+      "To disable all remote access to company systems"
+    ],
+    answer: 1,
+    explanation: "VDI hosts desktop operating systems centrally on servers, letting users remotely access a consistent, centrally managed desktop from various devices."
+  },
+  {
+    id: "c1-vc-14",
+    domain: "Virtualization and Cloud Computing",
+    question: "Which term describes paying only for the cloud resources actually consumed, rather than a flat upfront fee?",
+    choices: ["Capital expenditure model", "Pay-as-you-go / metered billing", "Perpetual licensing", "Site licensing"],
+    answer: 1,
+    explanation: "Pay-as-you-go (metered) billing charges customers based on actual resource consumption, a defining characteristic of most public cloud services."
+  },
+  {
+    id: "c1-vc-15",
+    domain: "Virtualization and Cloud Computing",
+    question: "A technician wants to test a new operating system without affecting their existing PC installation. What is a practical solution?",
+    choices: [
+      "Reformat the primary hard drive",
+      "Install and run the OS inside a virtual machine",
+      "Replace the motherboard",
+      "Disable the BIOS entirely"
+    ],
+    answer: 1,
+    explanation: "Running the new OS inside a VM lets a technician test it safely in isolation, without touching the host system's existing installation."
+  },
+  {
+    id: "c1-vc-16",
+    domain: "Virtualization and Cloud Computing",
+    question: "Which setting must typically be enabled in a system's BIOS/UEFI to allow virtualization software to create and run VMs efficiently?",
+    choices: ["Secure Boot", "Hardware virtualization support (e.g., Intel VT-x / AMD-V)", "Fast Boot", "Legacy boot mode"],
+    answer: 1,
+    explanation: "Hardware-assisted virtualization extensions (Intel VT-x or AMD-V) must be enabled in firmware for hypervisors to run VMs efficiently."
+  },
+  {
+    id: "c1-vc-17",
+    domain: "Virtualization and Cloud Computing",
+    question: "What is the purpose of a cloud file synchronization service, such as a shared cloud drive?",
+    choices: [
+      "It encrypts local hard drives only",
+      "It keeps files updated and accessible across multiple devices and locations",
+      "It replaces the need for any internet access",
+      "It manages virtual machine snapshots"
+    ],
+    answer: 1,
+    explanation: "Cloud sync services keep a copy of files updated across all of a user's connected devices, providing access from anywhere with an internet connection."
+  },
+  {
+    id: "c1-vc-18",
+    domain: "Virtualization and Cloud Computing",
+    question: "Which of the following is a security consideration unique to shared public cloud environments?",
+    choices: [
+      "Physical theft of on-premises servers",
+      "Multi-tenancy risk, where other customers share the same underlying infrastructure",
+      "Local power outages at a single office",
+      "Damage to local network cabling"
+    ],
+    answer: 1,
+    explanation: "In a public cloud, multiple customers (tenants) share the same underlying physical infrastructure, introducing multi-tenancy risks not present in dedicated on-premises environments."
+  },
+  {
+    id: "c1-vc-19",
+    domain: "Virtualization and Cloud Computing",
+    question: "What is 'live migration' in a virtualized environment?",
+    choices: [
+      "Copying files to a USB drive",
+      "Moving a running VM from one physical host to another with minimal or no downtime",
+      "Upgrading a physical server's RAM",
+      "Formatting a VM's virtual disk"
+    ],
+    answer: 1,
+    explanation: "Live migration transfers a running VM between physical hosts while it continues operating, minimizing or eliminating downtime for users."
+  },
+  {
+    id: "c1-vc-20",
+    domain: "Virtualization and Cloud Computing",
+    question: "Which cloud deployment model would be MOST appropriate for several government agencies that need to share resources under similar compliance requirements?",
+    choices: ["Public cloud", "Private cloud", "Community cloud", "Hybrid cloud"],
+    answer: 2,
+    explanation: "A community cloud is shared by several organizations with common concerns, such as compliance requirements, making it well suited to a group of related agencies."
+  },
+
+  // ---------------- Hardware and Network Troubleshooting (set 2) ----------------
+  {
+    id: "c1-tr-11",
+    domain: "Hardware and Network Troubleshooting",
+    question: "A user's wireless mouse and keyboard are unresponsive, but wired peripherals work fine. What is a likely FIRST troubleshooting step?",
+    choices: [
+      "Reinstall the operating system",
+      "Check or replace the batteries and verify the wireless USB receiver is properly connected",
+      "Replace the motherboard",
+      "Reformat the hard drive"
+    ],
+    answer: 1,
+    explanation: "Wireless peripheral issues are most often caused by dead batteries or a disconnected/loose USB receiver, which should be checked before anything more drastic."
+  },
+  {
+    id: "c1-tr-12",
+    domain: "Hardware and Network Troubleshooting",
+    question: "A desktop intermittently loses network connectivity, and the NIC's link light turns off during those times. What should be checked?",
+    choices: ["Monitor settings", "The network cable, port, and NIC connection", "The CPU cooler", "The optical drive"],
+    answer: 1,
+    explanation: "A link light that goes dark indicates a physical connectivity problem, so the cable, switch port, and NIC connection should be checked first."
+  },
+  {
+    id: "c1-tr-13",
+    domain: "Hardware and Network Troubleshooting",
+    question: "A computer's date and time keep resetting to an incorrect value after every reboot, even after manual correction. What is the MOST likely cause?",
+    choices: ["A failing CMOS battery", "A corrupted operating system", "Bad RAM", "A failing GPU"],
+    answer: 0,
+    explanation: "A dying CMOS battery can't retain the system clock and BIOS settings while powered off, causing the date/time to reset on every restart."
+  },
+  {
+    id: "c1-tr-14",
+    domain: "Hardware and Network Troubleshooting",
+    question: "Multiple users report they cannot reach any external websites, though internal file shares work fine. What should be checked FIRST?",
+    choices: ["Each user's mouse settings", "DNS settings and the default gateway/router configuration", "Individual monitor cables", "Keyboard drivers"],
+    answer: 1,
+    explanation: "Internal resources working while external access fails points to a DNS or gateway/routing problem rather than an issue with individual workstations."
+  },
+  {
+    id: "c1-tr-15",
+    domain: "Hardware and Network Troubleshooting",
+    question: "A print job is stuck in the print queue and won't clear or print. What is a reasonable troubleshooting step?",
+    choices: ["Restart the print spooler service", "Replace the printer entirely", "Reinstall the operating system", "Replace the network switch"],
+    answer: 0,
+    explanation: "Restarting the print spooler service often clears a stuck queue caused by a hung print job, without needing to replace any hardware."
+  },
+  {
+    id: "c1-tr-16",
+    domain: "Hardware and Network Troubleshooting",
+    question: "A user's external hard drive is not recognized by their computer. What should be checked FIRST?",
+    choices: [
+      "Cable connections and whether the drive appears in Disk Management",
+      "The CPU temperature",
+      "The monitor cable",
+      "The keyboard layout"
+    ],
+    answer: 0,
+    explanation: "Basic connection checks and confirming whether the OS detects the drive at all (via Disk Management) should come before deeper diagnosis."
+  },
+  {
+    id: "c1-tr-17",
+    domain: "Hardware and Network Troubleshooting",
+    question: "A laptop's fan runs loudly and constantly, and the device feels hot to the touch. What is a likely cause and remedy?",
+    choices: [
+      "This is normal behavior and requires no action",
+      "Dust buildup is restricting airflow; clean the vents and fans",
+      "The battery needs replacing and nothing else",
+      "The RAM simply needs reseating and nothing else"
+    ],
+    answer: 1,
+    explanation: "Dust accumulation blocking vents and fans is a very common cause of loud fan noise and overheating, and cleaning them often resolves the issue."
+  },
+  {
+    id: "c1-tr-18",
+    domain: "Hardware and Network Troubleshooting",
+    question: "After a power outage, a desktop won't boot and shows no lights or fan activity at all. What should be checked FIRST?",
+    choices: ["The GPU driver", "The power cable, outlet, and power supply switch/connections", "The OS boot order", "The DNS settings"],
+    answer: 1,
+    explanation: "No lights or fan activity at all points to a power delivery problem, so the cable, outlet, and PSU connections/switch should be checked first."
+  },
+  {
+    id: "c1-tr-19",
+    domain: "Hardware and Network Troubleshooting",
+    question: "A technician suspects a duplicate IP address is causing connectivity conflicts on the network. Which command helps identify IP configuration details on a Windows PC?",
+    choices: ["ipconfig /all", "format C:", "diskpart", "regedit"],
+    answer: 0,
+    explanation: "ipconfig /all displays detailed IP configuration for all adapters, which helps identify address conflicts or misconfiguration."
+  },
+  {
+    id: "c1-tr-20",
+    domain: "Hardware and Network Troubleshooting",
+    question: "A user reports their laptop's touchpad isn't working, but an external USB mouse works fine. What should be checked FIRST?",
+    choices: [
+      "The GPU driver",
+      "Whether the touchpad has been disabled via a function-key toggle or in Device Manager/settings",
+      "The power supply",
+      "The network adapter"
+    ],
+    answer: 1,
+    explanation: "Many laptops have a function-key shortcut or setting to disable the touchpad (often to avoid interference from an external mouse), which should be checked before assuming a hardware fault."
   }
 ];

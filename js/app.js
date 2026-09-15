@@ -31,7 +31,11 @@
   // ---------------- state ----------------
   let state = {
     examKey: null,
-    order: [],       // shuffled question objects with shuffled choices
+    mode: "fixed",   // "fixed" | "continuous"
+    order: [],       // fixed mode: shuffled+prepared question objects
+    lapQueue: [],    // continuous mode: shuffled raw questions for the current lap
+    lapPointer: 0,   // continuous mode: position within lapQueue
+    currentQ: null,  // continuous mode: the currently displayed prepared question
     index: 0,
     answers: [],     // { question, selectedIndex, correctIndex, correct }
     answeredCurrent: false,
@@ -86,24 +90,58 @@
 
   function attachHomeEvents() {
     $all("[data-start-exam]").forEach((btn) => {
-      btn.addEventListener("click", () => startExam(btn.getAttribute("data-start-exam")));
+      btn.addEventListener("click", () =>
+        startExam(btn.getAttribute("data-start-exam"), btn.getAttribute("data-mode") || "fixed")
+      );
     });
   }
 
   // ---------------- quiz screen ----------------
-  function startExam(examKey) {
+  function startExam(examKey, mode) {
     const exam = EXAMS[examKey];
     state = {
       examKey,
-      order: shuffle(exam.questions).map(prepareQuestion),
+      mode: mode === "continuous" ? "continuous" : "fixed",
+      order: [],
+      lapQueue: [],
+      lapPointer: 0,
+      currentQ: null,
       index: 0,
       answers: [],
       answeredCurrent: false,
       selectedIndex: null
     };
-    $("#quiz-exam-name").textContent = `${exam.name} (${exam.code})`;
+
+    if (state.mode === "fixed") {
+      state.order = shuffle(exam.questions).map(prepareQuestion);
+    } else {
+      state.lapQueue = shuffle(exam.questions);
+      state.lapPointer = 0;
+      state.currentQ = prepareQuestion(nextRawQuestion());
+    }
+
+    $("#quiz-exam-name").textContent =
+      `${exam.name} (${exam.code}) — ${state.mode === "continuous" ? "Continuous Practice" : "Fixed-Length Test"}`;
     show("screen-quiz");
     renderQuestion();
+  }
+
+  // Pulls the next raw (unshuffled-choices) question for continuous mode.
+  // When a lap of the full bank is exhausted, reshuffles a new lap, avoiding
+  // an immediate repeat of the last question shown.
+  function nextRawQuestion() {
+    if (state.lapPointer >= state.lapQueue.length) {
+      const lastId = state.lapQueue.length ? state.lapQueue[state.lapQueue.length - 1].id : null;
+      const exam = EXAMS[state.examKey];
+      let newLap = shuffle(exam.questions);
+      if (lastId && newLap.length > 1 && newLap[0].id === lastId) {
+        const swapIdx = 1 + Math.floor(Math.random() * (newLap.length - 1));
+        [newLap[0], newLap[swapIdx]] = [newLap[swapIdx], newLap[0]];
+      }
+      state.lapQueue = newLap;
+      state.lapPointer = 0;
+    }
+    return state.lapQueue[state.lapPointer++];
   }
 
   function prepareQuestion(q) {
@@ -120,18 +158,20 @@
   }
 
   function currentQuestion() {
-    return state.order[state.index];
+    return state.mode === "fixed" ? state.order[state.index] : state.currentQ;
   }
 
   function renderQuestion() {
-    const exam = EXAMS[state.examKey];
-    const total = state.order.length;
     const q = currentQuestion();
+    const isContinuous = state.mode === "continuous";
+    const total = isContinuous ? null : state.order.length;
 
     $("#q-domain-tag").textContent = q.domain;
     $("#q-progress-label-current").textContent = state.index + 1;
-    $("#q-progress-label-total").textContent = total;
-    $("#q-progress-fill").style.width = ((state.index) / total * 100) + "%";
+    $("#q-progress-total-wrap").hidden = isContinuous;
+    if (!isContinuous) $("#q-progress-label-total").textContent = total;
+    $("#progress-track").hidden = isContinuous;
+    if (!isContinuous) $("#q-progress-fill").style.width = ((state.index) / total * 100) + "%";
     $("#q-score-tag").textContent = `Score so far: ${state.answers.filter(a => a.correct).length}/${state.answers.length}`;
     $("#question-text").textContent = q.question;
 
@@ -151,7 +191,9 @@
     $("#check-btn").disabled = true;
     $("#check-btn").hidden = false;
     $("#next-btn").hidden = true;
-    $("#next-btn").textContent = state.index === total - 1 ? "See Results" : "Next Question";
+    $("#next-btn").textContent = (!isContinuous && state.index === total - 1) ? "See Results" : "Next Question";
+    $("#finish-btn").hidden = !isContinuous;
+    $("#finish-btn").disabled = state.answers.length === 0;
 
     state.answeredCurrent = false;
     state.selectedIndex = null;
@@ -204,18 +246,33 @@
     $("#check-btn").hidden = true;
     $("#next-btn").hidden = false;
     $("#q-score-tag").textContent = `Score so far: ${state.answers.filter(a => a.correct).length}/${state.answers.length}`;
-    $("#q-progress-fill").style.width = ((state.index + 1) / state.order.length * 100) + "%";
+    $("#finish-btn").disabled = false;
+    if (state.mode === "fixed") {
+      $("#q-progress-fill").style.width = ((state.index + 1) / state.order.length * 100) + "%";
+    }
   }
 
   function nextQuestion() {
     if (!state.answeredCurrent) return;
-    if (state.index < state.order.length - 1) {
-      state.index++;
-      renderQuestion();
+    if (state.mode === "fixed") {
+      if (state.index < state.order.length - 1) {
+        state.index++;
+        renderQuestion();
+      } else {
+        renderResults();
+        show("screen-results");
+      }
     } else {
-      renderResults();
-      show("screen-results");
+      state.index++;
+      state.currentQ = prepareQuestion(nextRawQuestion());
+      renderQuestion();
     }
+  }
+
+  function finishContinuous() {
+    if (state.answers.length === 0) return;
+    renderResults();
+    show("screen-results");
   }
 
   // ---------------- results screen ----------------
@@ -339,12 +396,12 @@
   }
 
   function retakeSameExam() {
-    startExam(state.examKey);
+    startExam(state.examKey, state.mode);
   }
 
   function retakeOtherExam() {
     const other = state.examKey === "core1" ? "core2" : "core1";
-    startExam(other);
+    startExam(other, state.mode);
   }
 
   // ---------------- init ----------------
@@ -354,6 +411,7 @@
 
     $("#check-btn").addEventListener("click", checkAnswer);
     $("#next-btn").addEventListener("click", nextQuestion);
+    $("#finish-btn").addEventListener("click", finishContinuous);
     $("#exit-quiz-btn").addEventListener("click", () => {
       if (confirm("Exit this practice test? Your progress will be lost.")) goHome();
     });
