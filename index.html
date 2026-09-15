@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CompTIA A+ Practice Study Guide — Core 1 &amp; Core 2</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="app-header">
+  <div class="brand">
+    <span class="mark">A+</span>
+    <h1>CompTIA A+ Practice Study Guide</h1>
+  </div>
+  <div class="header-meta">
+    <span>Unofficial exam prep</span>
+    <button class="exit-btn" id="home-btn" type="button">Home</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ===================== HOME SCREEN ===================== -->
+  <section id="screen-home">
+    <div class="intro">
+      <h2>Choose your practice exam</h2>
+      <p>Answer exam-style multiple-choice questions, get instant right/wrong feedback with explanations, and receive a personalized study breakdown by domain at the end.</p>
+    </div>
+
+    <div class="exam-grid">
+      <div class="exam-card">
+        <span class="code">EXAM 220-1101</span>
+        <h3>Core 1</h3>
+        <ul class="facts">
+          <li><strong id="count-core1">50</strong> practice questions in this set</li>
+          <li>Real exam: up to <strong>90 questions</strong> in <strong>90 minutes</strong></li>
+          <li>Real exam passing score: <strong>675</strong> / 900</li>
+        </ul>
+        <div class="domain-bars" id="domains-core1"></div>
+        <button class="start-btn" data-start-exam="core1" type="button">Start Core 1 Practice Test</button>
+      </div>
+
+      <div class="exam-card">
+        <span class="code">EXAM 220-1102</span>
+        <h3>Core 2</h3>
+        <ul class="facts">
+          <li><strong id="count-core2">48</strong> practice questions in this set</li>
+          <li>Real exam: up to <strong>90 questions</strong> in <strong>90 minutes</strong></li>
+          <li>Real exam passing score: <strong>700</strong> / 900</li>
+        </ul>
+        <div class="domain-bars" id="domains-core2"></div>
+        <button class="start-btn" data-start-exam="core2" type="button">Start Core 2 Practice Test</button>
+      </div>
+    </div>
+
+    <div class="tips-card">
+      <h4>How this study guide works</h4>
+      <ul>
+        <li>Pick Core 1 or Core 2 — questions are pulled only from that exam's domains.</li>
+        <li>Select an answer, then click <strong>Check Answer</strong> to see if you're right or wrong.</li>
+        <li>Wrong answers are highlighted in <strong style="color:#c5221f;">red</strong>, and the correct answer is highlighted in <strong style="color:#1e8e3e;">green</strong>, with a short explanation.</li>
+        <li>Keyboard shortcuts: press <strong>1–4</strong> to select an answer, <strong>Enter</strong> to check or move on.</li>
+        <li>At the end, you'll get a full score breakdown by domain and a list of recommended study focus areas, plus a review of every question you missed.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ SCREEN ===================== -->
+  <section id="screen-quiz" hidden>
+    <div class="quiz-toolbar">
+      <span id="quiz-exam-name" class="domain-tag" style="background:#374a68;"></span>
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span>Question <span id="q-progress-label-current">1</span> of <span id="q-progress-label-total">50</span></span>
+          <span id="q-score-tag" class="score-tag">Score so far: 0/0</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="q-progress-fill" style="width:0%"></div></div>
+      </div>
+      <span class="domain-tag" id="q-domain-tag">Domain</span>
+    </div>
+
+    <div class="question-card">
+      <p class="question-text" id="question-text">Question text goes here.</p>
+      <div class="choices" id="choices"></div>
+
+      <div class="feedback-banner" id="feedback-banner" hidden></div>
+      <div class="explanation" id="explanation-box" hidden></div>
+
+      <div class="quiz-actions">
+        <button class="btn btn-secondary" id="exit-quiz-btn" type="button">Exit</button>
+        <button class="btn btn-primary" id="check-btn" type="button" disabled>Check Answer</button>
+        <button class="btn btn-primary" id="next-btn" type="button" hidden>Next Question</button>
+      </div>
+      <p class="hint">Tip: press 1–4 to pick an answer, Enter to check / continue.</p>
+    </div>
+  </section>
+
+  <!-- ===================== RESULTS SCREEN ===================== -->
+  <section id="screen-results" hidden>
+    <div class="results-summary">
+      <div class="score-circle" id="score-circle">
+        <span class="pct" id="score-pct">0%</span>
+        <span class="frac" id="score-frac">0 / 0 correct</span>
+      </div>
+      <h2 id="results-exam-name">Results</h2>
+      <p class="verdict-line" id="verdict-line"></p>
+    </div>
+
+    <div class="results-section">
+      <h3>Score by domain</h3>
+      <div id="domain-breakdown"></div>
+      <div class="study-focus" id="study-focus" hidden></div>
+    </div>
+
+    <div class="results-section">
+      <h3>Question review</h3>
+      <div class="filter-bar">
+        <button class="filter-chip active" data-filter="all" type="button">All</button>
+        <button class="filter-chip" data-filter="incorrect" type="button">Missed only</button>
+        <button class="filter-chip" data-filter="correct" type="button">Correct only</button>
+      </div>
+      <div id="review-list"></div>
+    </div>
+
+    <div class="results-actions">
+      <button class="btn btn-secondary" id="home-btn-2" type="button" onclick="document.getElementById('home-btn').click()">Back to Home</button>
+      <button class="btn btn-secondary" id="retake-other-btn" type="button">Try the Other Exam</button>
+      <button class="btn btn-primary" id="retake-same-btn" type="button">Retake This Exam</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="app-footer">
+  Unofficial study aid. CompTIA A+ is a registered trademark of CompTIA. This tool is not affiliated with or endorsed by CompTIA.
+</footer>
+
+<script src="js/data-core1.js"></script>
+<script src="js/data-core2.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
