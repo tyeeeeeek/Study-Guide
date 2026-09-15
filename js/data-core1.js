@@ -988,5 +988,514 @@ const CORE1_QUESTIONS = [
     ],
     answer: 1,
     explanation: "Many laptops have a function-key shortcut or setting to disable the touchpad (often to avoid interference from an external mouse), which should be checked before assuming a hardware fault."
+  },
+
+  // ================= HARD / TRICKY QUESTIONS =================
+  // These target easily-confused concepts, edge cases, and exam-style
+  // "which is NOT / EXCEPT" and multi-step-order traps.
+
+  // ---------------- Mobile Devices (hard) ----------------
+  {
+    id: "c1-md-h1",
+    domain: "Mobile Devices",
+    difficulty: "hard",
+    question: "A company allows employees to check corporate email on personal phones by having them accept an Exchange ActiveSync (EAS) mailbox policy, with no additional MDM containerization app installed. An employee is terminated, and IT issues a remote wipe. What is the MOST likely result on that employee's personal phone?",
+    choices: [
+      "Only the corporate mail app and its data are removed",
+      "The entire device is reset to factory defaults, erasing personal data along with corporate data",
+      "The wipe command is silently ignored because EAS cannot wipe personal devices",
+      "Only the device's lock screen PIN is reset"
+    ],
+    answer: 1,
+    explanation: "Without a true MDM/containerization solution creating a separate corporate workspace, a standard Exchange ActiveSync remote wipe performs a full factory reset of the device — it cannot selectively remove only corporate data. This is why BYOD policies relying on EAS alone carry real risk to employees' personal data, and why selective wipe requires a full MDM or MAM solution with a managed container."
+  },
+  {
+    id: "c1-md-h2",
+    domain: "Mobile Devices",
+    difficulty: "hard",
+    question: "A user's Android phone displays 'No SIM' after a recent OS update, but the exact same SIM card works fine when tested in another phone. What should be suspected FIRST in the original phone, now that the SIM itself is ruled out?",
+    choices: [
+      "The SIM card is still the most likely cause",
+      "The phone's SIM tray/reader contacts or a baseband/software issue introduced by the update",
+      "The mobile carrier's entire network is down",
+      "The phone's battery"
+    ],
+    answer: 1,
+    explanation: "Since the SIM was proven good in another device, the fault lies within the original phone itself — either the physical SIM tray/reader contacts or a baseband/radio software issue triggered by the update — not the SIM, a carrier-wide outage, or the battery."
+  },
+  {
+    id: "c1-md-h3",
+    domain: "Mobile Devices",
+    difficulty: "hard",
+    question: "An organization wants to enforce a device-wide passcode policy and be able to remotely wipe an ENTIRE personal device (including personal apps and photos) if it's lost. Which approach is required to achieve this level of control?",
+    choices: [
+      "Mobile Application Management (MAM) alone",
+      "Full Mobile Device Management (MDM) enrollment",
+      "A basic Exchange ActiveSync mailbox policy alone",
+      "A guest Wi-Fi network policy"
+    ],
+    answer: 1,
+    explanation: "MAM only manages specific corporate apps and their data, not the whole device. Full device-level control — passcode enforcement and a complete wipe of everything on the device — requires full MDM enrollment."
+  },
+  {
+    id: "c1-md-h4",
+    domain: "Mobile Devices",
+    difficulty: "hard",
+    question: "Which of the following is true regarding a USB-C port's support for DisplayPort Alt Mode video output?",
+    choices: [
+      "Any USB-C port or cable is guaranteed to support DisplayPort Alt Mode, since it's part of the connector standard",
+      "USB-C defines only a physical connector shape; DisplayPort Alt Mode (and other features like Thunderbolt or even USB 3 speeds) depends on what capabilities that specific port and cable actually implement",
+      "Only USB-C ports with a blue-colored connector support video output",
+      "DisplayPort Alt Mode requires USB-C version 1.0 specifically"
+    ],
+    answer: 1,
+    explanation: "A common trap: USB-C is just a connector shape. Whether a given USB-C port/cable actually supports DisplayPort Alt Mode, Thunderbolt, or higher USB data speeds depends entirely on what the manufacturer built into that specific port and cable — it is never guaranteed just because the connector is USB-C."
+  },
+  {
+    id: "c1-md-h5",
+    domain: "Mobile Devices",
+    difficulty: "hard",
+    question: "A device requires 45W USB Power Delivery (PD) for its fastest charging speed, but only an 18W USB-C PD charger is available. What will happen if the 18W charger is used?",
+    choices: [
+      "The device will not charge at all",
+      "The device will still charge, just more slowly, since USB PD negotiates the highest wattage both sides support",
+      "The 18W charger will be permanently damaged",
+      "The device will be damaged due to insufficient voltage"
+    ],
+    answer: 1,
+    explanation: "USB Power Delivery negotiates the best wattage that both the charger and device support. Using a lower-wattage PD charger than the device's maximum simply results in slower charging — it does not prevent charging or damage either device, a nuance that trips up people who assume any mismatch causes a failure."
+  },
+  {
+    id: "c1-md-h6",
+    domain: "Mobile Devices",
+    difficulty: "hard",
+    question: "Which biometric authentication method is generally considered WEAKEST, sometimes able to be defeated with just a high-resolution photograph, compared to fingerprint or infrared-based facial recognition?",
+    choices: [
+      "Fingerprint scanning",
+      "Basic 2D facial recognition using only a standard camera (no infrared depth sensing)",
+      "Iris scanning",
+      "A hardware security key"
+    ],
+    answer: 1,
+    explanation: "Simple 2D facial recognition relying only on a standard camera (without infrared depth-sensing, like true 3D facial mapping) can sometimes be tricked with a photo of the authorized user, unlike fingerprint scanning, iris scanning, or a physical hardware key."
+  },
+  {
+    id: "c1-md-h7",
+    domain: "Mobile Devices",
+    difficulty: "hard",
+    question: "A user edits the same cloud-synced note on their phone and tablet while BOTH devices are offline, then reconnects both to Wi-Fi around the same time. What most likely happens?",
+    choices: [
+      "The app automatically and perfectly merges both sets of edits with zero data loss",
+      "A sync conflict occurs; the app may prompt the user to pick a version, or automatically keep one version, potentially discarding some changes",
+      "Both devices are automatically factory reset",
+      "The user's cloud account is automatically suspended"
+    ],
+    answer: 1,
+    explanation: "Concurrent offline edits to the same file are a classic cause of sync conflicts — the service generally can't intelligently merge divergent changes, so it either prompts the user to choose a version or silently keeps one (often 'last write wins'), which can quietly discard changes made on the other device."
+  },
+  {
+    id: "c1-md-h8",
+    domain: "Mobile Devices",
+    difficulty: "hard",
+    question: "Which wireless attack technique specifically sends unsolicited messages or data to a nearby Bluetooth device WITHOUT establishing a paired connection?",
+    choices: ["Bluejacking", "Bluesnarfing", "Warflying", "An evil twin attack"],
+    answer: 0,
+    explanation: "Bluejacking sends unsolicited messages/data over Bluetooth without pairing. It's often confused with the similarly-named Bluesnarfing, which actually steals data (like contacts) from a target device — a classic pair of easily-mixed-up terms."
+  },
+
+  // ---------------- Networking (hard) ----------------
+  {
+    id: "c1-net-h1",
+    domain: "Networking",
+    difficulty: "hard",
+    question: "A workstation has IP address 192.168.10.50 with subnet mask 255.255.255.192. Which of the following addresses is on the SAME subnet?",
+    choices: ["192.168.10.65", "192.168.10.100", "192.168.10.30", "192.168.11.50"],
+    answer: 2,
+    explanation: "A /26 mask (255.255.255.192) creates blocks of 64 addresses per subnet: .0–.63, .64–.127, .128–.191, .192–.255. Address .50 falls in the .0–.63 block, and only .30 also falls in that same block. Both .65 and .100 fall in the next block (.64–.127), and .11.50 is in a different third octet entirely."
+  },
+  {
+    id: "c1-net-h2",
+    domain: "Networking",
+    difficulty: "hard",
+    question: "Which port is used for a mail CLIENT to submit outgoing mail to its own mail server (often with STARTTLS encryption), as distinct from port 25's traditional server-to-server relay role?",
+    choices: ["21", "587", "110", "143"],
+    answer: 1,
+    explanation: "Port 587 is the standard mail submission port used by clients sending outgoing mail to their server, typically with encryption. Port 25 is traditionally reserved for server-to-server relay, while 110 and 143 are POP3 and IMAP — both used for RECEIVING mail, not sending it."
+  },
+  {
+    id: "c1-net-h3",
+    domain: "Networking",
+    difficulty: "hard",
+    question: "A network administrator installs a Layer 3 switch in the server room. Which capability does this device have that a standard Layer 2-only switch does NOT?",
+    choices: [
+      "The ability to forward frames using a MAC address table",
+      "The ability to perform IP routing (such as inter-VLAN routing), in addition to standard Layer 2 switching",
+      "The ability to hand out DHCP leases only",
+      "The ability to automatically encrypt all traffic"
+    ],
+    answer: 1,
+    explanation: "A Layer 3 switch adds IP routing functionality — most notably inter-VLAN routing — on top of the standard Layer 2 (MAC-address-based) switching that both types of switches perform."
+  },
+  {
+    id: "c1-net-h4",
+    domain: "Networking",
+    difficulty: "hard",
+    question: "Which wireless security protocol, despite using strong AES encryption, was found vulnerable to the KRACK (Key Reinstallation Attack) exploit targeting its 4-way handshake?",
+    choices: ["WEP", "WPA", "WPA2", "An open (unsecured) network"],
+    answer: 2,
+    explanation: "KRACK specifically exploited a flaw in WPA2's 4-way handshake implementation. It's a good reminder that even a protocol using strong encryption (AES) can still have serious implementation-level vulnerabilities."
+  },
+  {
+    id: "c1-net-h5",
+    domain: "Networking",
+    difficulty: "hard",
+    question: "A technician needs to connect two computers directly together via their Ethernet ports, with no switch in between, using older NICs that lack Auto-MDIX. Which cable type is required?",
+    choices: ["A straight-through cable", "A crossover cable", "A rollover cable", "A coaxial cable"],
+    answer: 1,
+    explanation: "Traditionally, a crossover cable is required for direct NIC-to-NIC connections, while straight-through cables connect a device to a switch/router. Modern NICs with Auto-MDIX can often work around this automatically, which is why the question specifies older NICs lacking that feature."
+  },
+  {
+    id: "c1-net-h6",
+    domain: "Networking",
+    difficulty: "hard",
+    question: "Which DNS record type maps a domain name to an IPv6 address, as opposed to an IPv4 address?",
+    choices: ["A record", "AAAA record", "CNAME record", "MX record"],
+    answer: 1,
+    explanation: "An 'A' record maps a name to an IPv4 address, while a 'AAAA' (quad-A) record maps a name to an IPv6 address — a pair of similarly-named record types that are easy to mix up."
+  },
+  {
+    id: "c1-net-h7",
+    domain: "Networking",
+    difficulty: "hard",
+    question: "A network allows many internal devices to share a single public IP address simultaneously by tracking each connection using unique port numbers. What is this specific form of NAT called?",
+    choices: [
+      "Static NAT",
+      "Basic dynamic NAT (a one-to-one address pool)",
+      "Port Address Translation (PAT), also called NAT overload",
+      "DMZ NAT"
+    ],
+    answer: 2,
+    explanation: "PAT (also called NAT overload) allows many internal private addresses to share one public IP by distinguishing connections via port numbers — unlike static NAT (a fixed 1:1 mapping) or basic dynamic NAT (a pool of public addresses, still roughly 1:1 at any given moment)."
+  },
+  {
+    id: "c1-net-h8",
+    domain: "Networking",
+    difficulty: "hard",
+    question: "Two switches are connected with redundant physical links between them, and the network is experiencing broadcast storms and unstable MAC address tables. Which feature, if not properly enabled, is the MOST likely cause?",
+    choices: ["VLAN tagging", "Spanning Tree Protocol (STP)", "DHCP snooping", "Port security"],
+    answer: 1,
+    explanation: "Without STP, redundant physical links between switches create Layer 2 loops, which cause broadcast storms and constantly-changing MAC address tables. STP prevents this by detecting loops and blocking redundant paths until they're needed."
+  },
+
+  // ---------------- Hardware (hard) ----------------
+  {
+    id: "c1-hw-h1",
+    domain: "Hardware",
+    difficulty: "hard",
+    question: "A RAID 5 array is built using four 2TB drives. Approximately how much usable storage capacity does this array provide?",
+    choices: ["8TB", "2TB", "6TB", "4TB"],
+    answer: 2,
+    explanation: "RAID 5 dedicates the equivalent of one drive's worth of space to distributed parity. With four 2TB drives, usable capacity is (4 − 1) × 2TB = 6TB."
+  },
+  {
+    id: "c1-hw-h2",
+    domain: "Hardware",
+    difficulty: "hard",
+    question: "A RAID 10 (1+0) array is built using four 1TB drives. What is the usable capacity, and how many simultaneous drive failures can it reliably survive?",
+    choices: [
+      "4TB usable; it can survive any 2 drive failures",
+      "2TB usable; it's guaranteed to survive at least 1 drive failure, and can survive 2 simultaneous failures only if they aren't from the same mirrored pair",
+      "3TB usable; it can survive only 1 drive failure",
+      "2TB usable; it cannot survive any drive failure"
+    ],
+    answer: 1,
+    explanation: "RAID 10 mirrors pairs of drives, then stripes across the mirrored pairs — with four 1TB drives, usable capacity is 2TB (half of the raw total). It's always safe from a single drive failure, but surviving two simultaneous failures depends on whether they happen to come from different mirrored pairs — it's not an unconditional guarantee."
+  },
+  {
+    id: "c1-hw-h3",
+    domain: "Hardware",
+    difficulty: "hard",
+    question: "Which type of memory error-checking can both DETECT and automatically CORRECT single-bit memory errors, unlike basic parity RAM which can only detect them?",
+    choices: ["Non-parity RAM", "Parity RAM", "ECC (Error-Correcting Code) RAM", "Dual-channel RAM"],
+    answer: 2,
+    explanation: "ECC RAM can detect and correct single-bit errors (and detect many multi-bit errors), while basic parity RAM can only detect a single-bit error without correcting it. Non-parity and dual-channel RAM configurations offer no error correction at all."
+  },
+  {
+    id: "c1-hw-h4",
+    domain: "Hardware",
+    difficulty: "hard",
+    question: "A technician installs a new NVMe M.2 SSD, but the system only recognizes it running at much slower speeds than expected for NVMe. What is the MOST likely cause?",
+    choices: [
+      "The SSD is defective",
+      "The specific M.2 slot used is wired for SATA signaling rather than PCIe/NVMe lanes",
+      "The power supply is too weak",
+      "The RAM is incompatible with the SSD"
+    ],
+    answer: 1,
+    explanation: "Some M.2 slots are wired only for SATA signaling rather than the PCIe lanes NVMe requires. Installing an NVMe drive into such a slot (or a slot that only supports a lower link width) causes it to run at reduced speed rather than true NVMe performance — a commonly confusing quirk of the M.2 form factor supporting multiple protocols."
+  },
+  {
+    id: "c1-hw-h5",
+    domain: "Hardware",
+    difficulty: "hard",
+    question: "Which CPU feature allows a single physical core to present two logical processors/threads to the operating system simultaneously?",
+    choices: ["Multi-core processing", "Hyper-Threading / Simultaneous Multithreading (SMT)", "Overclocking", "Thermal throttling"],
+    answer: 1,
+    explanation: "Hyper-Threading (Intel's branding) or SMT (the general term) lets one physical core handle two logical threads, which is distinct from simply having multiple separate physical cores — a distinction often confused with 'more cores.'"
+  },
+  {
+    id: "c1-hw-h6",
+    domain: "Hardware",
+    difficulty: "hard",
+    question: "A power supply is rated '80 PLUS Gold.' What does this certification primarily indicate?",
+    choices: [
+      "The PSU's maximum wattage capacity",
+      "The PSU's energy efficiency (how much AC input is converted to usable DC output vs. wasted as heat) at specific load levels",
+      "Which connector types the PSU includes",
+      "The length of the PSU's warranty"
+    ],
+    answer: 1,
+    explanation: "The 80 PLUS certification tiers (Bronze, Silver, Gold, Platinum, Titanium) rate a power supply's efficiency at converting AC input to usable DC output at defined load percentages — they say nothing directly about wattage capacity, connectors, or warranty."
+  },
+  {
+    id: "c1-hw-h7",
+    domain: "Hardware",
+    difficulty: "hard",
+    question: "Removing the CMOS battery briefly is a common way to reset a forgotten BIOS/UEFI password on many desktop motherboards. Why does this trick often NOT work on modern laptops?",
+    choices: [
+      "Laptops don't have CMOS batteries",
+      "Many modern laptop UEFI implementations store the password in a way that isn't cleared by removing a coin-cell battery, sometimes requiring vendor-specific tools or professional service",
+      "It works identically on laptops and desktops",
+      "Laptops never have BIOS/UEFI passwords"
+    ],
+    answer: 1,
+    explanation: "Unlike many desktop boards, a lot of laptop UEFI firmware stores the supervisor password in a way a simple battery pull won't clear — often requiring a manufacturer-specific unlock procedure or professional service, which trips up people applying the classic desktop trick."
+  },
+  {
+    id: "c1-hw-h8",
+    domain: "Hardware",
+    difficulty: "hard",
+    question: "Which printer maintenance task is specific to INKJET printers and generally not applicable to laser printers?",
+    choices: [
+      "Replacing the toner cartridge",
+      "Cleaning or aligning the print heads",
+      "Replacing the imaging drum",
+      "Cleaning the fuser assembly"
+    ],
+    answer: 1,
+    explanation: "Inkjet printers require periodic print head cleaning/alignment to prevent clogged nozzles — a maintenance concern unique to inkjet technology, while toner, drums, and fusers are laser printer components."
+  },
+
+  // ---------------- Virtualization and Cloud Computing (hard) ----------------
+  {
+    id: "c1-vc-h1",
+    domain: "Virtualization and Cloud Computing",
+    difficulty: "hard",
+    question: "A Type 1 hypervisor hosts dozens of production VMs on one physical server. One VM becomes infected with malware. Under normal, properly functioning circumstances, what is the expected impact on the OTHER VMs on that host?",
+    choices: [
+      "All VMs on the host are automatically compromised too, since they share hardware",
+      "The other VMs should remain isolated and unaffected, since hypervisor-level isolation separates VM memory and resources — though a rare hypervisor vulnerability ('VM escape') could theoretically break this isolation",
+      "The physical host immediately powers itself off as a built-in security measure",
+      "Only VMs created after the infected one are affected"
+    ],
+    answer: 1,
+    explanation: "Hypervisor isolation is specifically designed to keep a compromised VM from affecting others on the same host. The one real caveat is a 'VM escape' vulnerability — rare, but the reason isolation isn't treated as an absolute guarantee in security discussions."
+  },
+  {
+    id: "c1-vc-h2",
+    domain: "Virtualization and Cloud Computing",
+    difficulty: "hard",
+    question: "Which statement BEST distinguishes 'resource pooling' from 'rapid elasticity' as essential cloud computing characteristics?",
+    choices: [
+      "They are the same concept described two different ways",
+      "Resource pooling refers to a provider serving multiple customers from a shared pool of dynamically assigned resources; rapid elasticity refers to the ability to quickly scale those resources up or down as demand changes",
+      "Resource pooling means the customer owns the physical hardware",
+      "Rapid elasticity refers only to network bandwidth"
+    ],
+    answer: 1,
+    explanation: "These are two distinct essential cloud characteristics that are easy to conflate: pooling describes shared, multi-tenant infrastructure, while elasticity describes the ability to scale allocated resources on demand."
+  },
+  {
+    id: "c1-vc-h3",
+    domain: "Virtualization and Cloud Computing",
+    difficulty: "hard",
+    question: "A company migrates a legacy on-premises application to a public cloud IaaS provider with minimal to no changes to the application itself. What is this migration strategy commonly called?",
+    choices: ["Re-platforming", "Lift-and-shift (rehosting)", "Re-architecting", "Refactoring"],
+    answer: 1,
+    explanation: "'Lift-and-shift' (rehosting) moves an application to the cloud largely unchanged, unlike re-platforming (some optimization), or re-architecting/refactoring, which involve significant redesign to take advantage of cloud-native features."
+  },
+  {
+    id: "c1-vc-h4",
+    domain: "Virtualization and Cloud Computing",
+    difficulty: "hard",
+    question: "What is a key risk of 'VM sprawl' in a virtualized environment?",
+    choices: [
+      "It always improves overall performance",
+      "Unused or forgotten VMs continue consuming host resources and software licensing, and unpatched ones can become significant security risks",
+      "It automatically qualifies the organization for licensing discounts",
+      "It has no meaningful downside"
+    ],
+    answer: 1,
+    explanation: "VM sprawl — uncontrolled proliferation of VMs, many idle or forgotten — wastes compute resources and licensing costs, and forgotten, unpatched VMs quietly become serious security liabilities."
+  },
+  {
+    id: "c1-vc-h5",
+    domain: "Virtualization and Cloud Computing",
+    difficulty: "hard",
+    question: "Which of the following is true regarding nested virtualization (running a hypervisor inside a VM that is itself running on a hypervisor)?",
+    choices: [
+      "It is never possible on any platform",
+      "Some modern hypervisors and CPUs support it, but it typically introduces additional performance overhead and complexity from the extra virtualization layer",
+      "It always performs identically to bare-metal virtualization",
+      "It removes the need for hardware virtualization extensions on the host CPU"
+    ],
+    answer: 1,
+    explanation: "Nested virtualization is supported on some modern platforms but is not universal, and the added layer of virtualization typically introduces measurable performance overhead compared to running directly on bare metal."
+  },
+  {
+    id: "c1-vc-h6",
+    domain: "Virtualization and Cloud Computing",
+    difficulty: "hard",
+    question: "An organization keeps sensitive financial data processing in its private cloud, but automatically shifts overflow compute demand to a public cloud provider only during periods of peak load. What is this specific hybrid cloud use case called?",
+    choices: ["Cloud bursting", "Cloud bridging", "Cloud tiering", "Cloud federation"],
+    answer: 0,
+    explanation: "'Cloud bursting' specifically describes using public cloud capacity to absorb temporary demand spikes while normal operations continue on a private cloud — a specific, named hybrid cloud pattern."
+  },
+  {
+    id: "c1-vc-h7",
+    domain: "Virtualization and Cloud Computing",
+    difficulty: "hard",
+    question: "A host with only 4 physical CPU cores runs several VMs whose ALLOCATED vCPUs add up to well more than 4 total. This is an example of what generally normal virtualization practice, which can cause performance problems only if overused?",
+    choices: ["Virtualization sprawl", "CPU overcommitment/oversubscription", "Load balancing", "Live migration"],
+    answer: 1,
+    explanation: "Overcommitting (oversubscribing) vCPUs beyond the physical core count is common and often fine, since VMs rarely all demand 100% CPU simultaneously — but excessive overcommitment can degrade performance when many VMs demand CPU at once."
+  },
+  {
+    id: "c1-vc-h8",
+    domain: "Virtualization and Cloud Computing",
+    difficulty: "hard",
+    question: "Which statement BEST describes the difference between a full VM clone and a linked clone?",
+    choices: [
+      "A full clone is an entirely independent copy with its own complete virtual disk; a linked clone shares a base disk image and stores only the differences, saving space but creating a dependency on that original base image",
+      "They are functionally identical in every respect",
+      "A linked clone always uses more storage than a full clone",
+      "A full clone cannot be powered on independently of the original VM"
+    ],
+    answer: 0,
+    explanation: "Full clones are completely independent of the parent VM's disk. Linked clones save storage by referencing a shared base image and recording only the differences — but that dependency means the base image can't simply be deleted without breaking every linked clone built from it."
+  },
+
+  // ---------------- Hardware and Network Troubleshooting (hard) ----------------
+  {
+    id: "c1-tr-h1",
+    domain: "Hardware and Network Troubleshooting",
+    difficulty: "hard",
+    question: "A desktop won't boot. Following standard troubleshooting methodology, which of the following should generally be checked FIRST, before opening the case?",
+    choices: [
+      "Reseat the RAM modules",
+      "Verify all external cables (power, monitor) are properly connected and test a known-good power outlet",
+      "Replace the power supply",
+      "Replace the motherboard"
+    ],
+    answer: 1,
+    explanation: "Standard troubleshooting starts with the simplest, least invasive checks — cables and power — before moving on to opening the case, reseating components, or replacing parts."
+  },
+  {
+    id: "c1-tr-h2",
+    domain: "Hardware and Network Troubleshooting",
+    difficulty: "hard",
+    question: "Per the standard CompTIA troubleshooting methodology, after a technician establishes a theory of probable cause and TESTS that theory, confirming it's correct, what should be done NEXT?",
+    choices: [
+      "Immediately close the ticket with no further action",
+      "Establish a plan of action to resolve the problem, then implement the solution",
+      "Escalate the issue regardless of the confirmed cause",
+      "Formulate a brand-new theory even though the original one was confirmed"
+    ],
+    answer: 1,
+    explanation: "The methodology flows: identify the problem → establish a theory → test the theory → establish a plan of action and implement the solution → verify full system functionality → document. Once a theory is confirmed, the correct next step is planning and implementing the fix, not skipping ahead or restarting the process."
+  },
+  {
+    id: "c1-tr-h3",
+    domain: "Hardware and Network Troubleshooting",
+    difficulty: "hard",
+    question: "A user's computer runs extremely slowly, and Task Manager shows disk usage constantly at 100% even with few applications open. Which of the following is LEAST likely to be a direct cause?",
+    choices: [
+      "A failing or dying hard drive with degraded read/write performance",
+      "Windows Search indexing or a Windows Update running in the background",
+      "Malware performing disk-intensive activity",
+      "A loose HDMI cable connected to the monitor"
+    ],
+    answer: 3,
+    explanation: "A loose HDMI cable would affect video display, not disk activity — it's unrelated to this symptom. The other three are all legitimate, common causes of sustained high disk usage."
+  },
+  {
+    id: "c1-tr-h4",
+    domain: "Hardware and Network Troubleshooting",
+    difficulty: "hard",
+    question: "A laptop intermittently shuts down only when running on battery power, but never while plugged into AC power. What is the MOST likely explanation?",
+    choices: [
+      "A failing GPU",
+      "A degraded/failing battery unable to sustain sufficient voltage or capacity under load",
+      "A corrupted operating system",
+      "A bad network adapter"
+    ],
+    answer: 1,
+    explanation: "Since the problem only appears on battery power (never on AC), the most direct explanation is the battery itself failing to sustain the system — the GPU, OS, and network adapter are unrelated to this power-source-specific symptom."
+  },
+  {
+    id: "c1-tr-h5",
+    domain: "Hardware and Network Troubleshooting",
+    difficulty: "hard",
+    question: "After a Windows update, a user's all-in-one printer/scanner can still print fine, but scanning no longer works. What should be checked FIRST?",
+    choices: [
+      "Replace the entire all-in-one device",
+      "Check whether the scanner-specific driver/software needs updating or reinstalling, since the update may have affected only that component",
+      "Reinstall the entire operating system",
+      "Replace the USB cable"
+    ],
+    answer: 1,
+    explanation: "Since only the scanning function broke (printing still works) right after an update, the most targeted step is checking the scanner-specific driver or software, rather than replacing hardware or performing a full OS reinstall."
+  },
+  {
+    id: "c1-tr-h6",
+    domain: "Hardware and Network Troubleshooting",
+    difficulty: "hard",
+    question: "A technician tests a network cable with a multimeter and confirms continuity on all 8 pins in the correct order, yet the connected device still shows no network activity. What should be checked NEXT?",
+    choices: [
+      "Retest cable continuity again with the same tool",
+      "The switch port status/configuration, NIC driver, and link light activity — since basic continuity doesn't confirm actual data-signaling performance",
+      "Assume the cable is bad regardless of the passing test",
+      "Replace the entire computer"
+    ],
+    answer: 1,
+    explanation: "A continuity test confirms wiring only — it says nothing about signal quality, port negotiation (speed/duplex), or driver issues. Passing one test doesn't rule out other causes of the connectivity problem."
+  },
+  {
+    id: "c1-tr-h7",
+    domain: "Hardware and Network Troubleshooting",
+    difficulty: "hard",
+    question: "A monitor displays distorted colors and geometric artifacts, but only during high-motion video content — static images look completely fine. What is the MOST likely cause?",
+    choices: [
+      "A failing/overheating GPU, or a loose video cable affecting signal integrity under higher bandwidth demand",
+      "A failing power supply",
+      "A failing hard drive",
+      "Incorrect DNS settings"
+    ],
+    answer: 0,
+    explanation: "Artifacts that appear only under higher video bandwidth demand (motion) point to a GPU or video signal issue, not the power supply, storage, or network settings, which have no bearing on how video is rendered or displayed."
+  },
+  {
+    id: "c1-tr-h8",
+    domain: "Hardware and Network Troubleshooting",
+    difficulty: "hard",
+    question: "The standard malware removal best-practice process includes several ordered steps. Which of the following correctly comes BEFORE running anti-malware remediation scans?",
+    choices: [
+      "Re-enable System Restore",
+      "Investigate and verify malware symptoms, then quarantine the infected system",
+      "Educate the end user",
+      "Schedule scans and run updates"
+    ],
+    answer: 1,
+    explanation: "The standard process is: 1) investigate/verify symptoms, 2) quarantine the infected system, 3) disable System Restore, 4) remediate (update and run anti-malware scans), 5) schedule future scans/updates, 6) re-enable System Restore, 7) educate the end user. Quarantining after identifying symptoms happens early — well before remediation, scheduling scans, re-enabling System Restore, or educating the user."
   }
 ];

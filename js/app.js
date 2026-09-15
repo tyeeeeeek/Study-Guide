@@ -85,6 +85,7 @@
         domainsWrap.appendChild(row);
       });
       $(`#count-${exam.key}`).textContent = exam.questions.length;
+      $(`#hard-count-${exam.key}`).textContent = exam.questions.filter((q) => q.difficulty === "hard").length;
     });
   }
 
@@ -150,6 +151,7 @@
     return {
       id: q.id,
       domain: q.domain,
+      difficulty: q.difficulty || "standard",
       question: q.question,
       explanation: q.explanation,
       choices: shuffled.map((p) => p.text),
@@ -167,6 +169,7 @@
     const total = isContinuous ? null : state.order.length;
 
     $("#q-domain-tag").textContent = q.domain;
+    $("#q-difficulty-tag").hidden = q.difficulty !== "hard";
     $("#q-progress-label-current").textContent = state.index + 1;
     $("#q-progress-total-wrap").hidden = isContinuous;
     if (!isContinuous) $("#q-progress-label-total").textContent = total;
@@ -217,6 +220,7 @@
     state.answers.push({
       id: q.id,
       domain: q.domain,
+      difficulty: q.difficulty,
       question: q.question,
       choices: q.choices,
       explanation: q.explanation,
@@ -350,6 +354,7 @@
     const items = state.answers.filter((a) => {
       if (filter === "incorrect") return !a.correct;
       if (filter === "correct") return a.correct;
+      if (filter === "hard") return a.difficulty === "hard";
       return true;
     });
 
@@ -365,7 +370,7 @@
       const correctAnswerText = a.choices[a.correctIndex];
       div.innerHTML = `
         <div class="rq-head">
-          <span class="rq-domain">${a.domain}</span>
+          <span class="rq-domain">${a.domain}${a.difficulty === "hard" ? ' <span class="difficulty-tag hard">HARD</span>' : ""}</span>
           <span class="rq-status ${a.correct ? "correct" : "incorrect"}">${a.correct ? "Correct" : "Incorrect"}</span>
         </div>
         <p class="rq-question">${a.question}</p>

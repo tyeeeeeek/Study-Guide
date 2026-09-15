@@ -33,7 +33,7 @@
         <span class="code">EXAM 220-1101</span>
         <h3>Core 1</h3>
         <ul class="facts">
-          <li><strong id="count-core1">100</strong> practice questions in the bank</li>
+          <li><strong id="count-core1">140</strong> practice questions in the bank (incl. <strong id="hard-count-core1">40</strong> extra-tricky "Hard" questions)</li>
           <li>Real exam: up to <strong>90 questions</strong> in <strong>90 minutes</strong></li>
           <li>Real exam passing score: <strong>675</strong> / 900</li>
         </ul>
@@ -48,7 +48,7 @@
         <span class="code">EXAM 220-1102</span>
         <h3>Core 2</h3>
         <ul class="facts">
-          <li><strong id="count-core2">96</strong> practice questions in the bank</li>
+          <li><strong id="count-core2">136</strong> practice questions in the bank (incl. <strong id="hard-count-core2">40</strong> extra-tricky "Hard" questions)</li>
           <li>Real exam: up to <strong>90 questions</strong> in <strong>90 minutes</strong></li>
           <li>Real exam passing score: <strong>700</strong> / 900</li>
         </ul>
@@ -70,6 +70,7 @@
         <li>Wrong answers are highlighted in <strong style="color:#c5221f;">red</strong>, and the correct answer is highlighted in <strong style="color:#1e8e3e;">green</strong>, with a short explanation.</li>
         <li>Keyboard shortcuts: press <strong>1–4</strong> to select an answer, <strong>Enter</strong> to check or move on.</li>
         <li>At the end, you'll get a full score breakdown by domain and a list of recommended study focus areas, plus a review of every question you missed.</li>
+        <li>Some questions are marked <span class="difficulty-tag hard" style="padding:2px 7px; font-size:10.5px;">⚠ HARD</span> — these are deliberately tricky, exam-style trap questions (easily-confused terms, "EXCEPT" questions, multi-step troubleshooting order, and subnetting/RAID math) designed to test the concepts most likely to trip you up on the real exam. You can filter to just these on the results screen.</li>
       </ul>
     </div>
   </section>
@@ -86,6 +87,7 @@
         <div class="progress-track" id="progress-track"><div class="progress-fill" id="q-progress-fill" style="width:0%"></div></div>
       </div>
       <span class="domain-tag" id="q-domain-tag">Domain</span>
+      <span class="difficulty-tag hard" id="q-difficulty-tag" hidden>⚠ HARD</span>
     </div>
 
     <div class="question-card">
@@ -128,6 +130,7 @@
         <button class="filter-chip active" data-filter="all" type="button">All</button>
         <button class="filter-chip" data-filter="incorrect" type="button">Missed only</button>
         <button class="filter-chip" data-filter="correct" type="button">Correct only</button>
+        <button class="filter-chip" data-filter="hard" type="button">Hard only</button>
       </div>
       <div id="review-list"></div>
     </div>

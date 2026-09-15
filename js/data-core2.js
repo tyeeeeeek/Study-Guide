@@ -1096,5 +1096,562 @@ const CORE2_QUESTIONS = [
     ],
     answer: 1,
     explanation: "Skipping change management increases the risk of unexpected outages and security issues, and makes problems much harder to trace back and roll back safely."
+  },
+
+  // ================= HARD / TRICKY QUESTIONS =================
+  // These target easily-confused concepts, edge cases, and exam-style
+  // "which is NOT / EXCEPT" and multi-step-order traps.
+
+  // ---------------- Operating Systems (hard) ----------------
+  {
+    id: "c2-os-h1",
+    domain: "Operating Systems",
+    difficulty: "hard",
+    question: "A technician runs 'sfc /scannow' and it reports corrupt files it was unable to fix. What should be tried NEXT to repair the underlying Windows component store before re-running sfc?",
+    choices: [
+      "Run 'chkdsk /f' only",
+      "Run 'DISM /Online /Cleanup-Image /RestoreHealth' to repair the component store, then re-run sfc /scannow",
+      "Reinstall Windows immediately",
+      "Run 'diskpart clean'"
+    ],
+    answer: 1,
+    explanation: "DISM repairs the underlying Windows Component Store (WinSxS) that SFC relies on to fix files. When SFC can't fully repair the system, running DISM first and then re-running SFC is the standard escalation path — a two-tool relationship that's often confused or reversed."
+  },
+  {
+    id: "c2-os-h2",
+    domain: "Operating Systems",
+    difficulty: "hard",
+    question: "A technician wants a Windows 10 Home PC to act as the HOST for an incoming Remote Desktop (RDP) connection — that is, someone else connecting INTO it. What is the issue with this plan?",
+    choices: [
+      "Windows 10 Home fully supports incoming RDP connections, just like Pro",
+      "Windows 10 Home can only initiate outgoing RDP connections as a client — it cannot accept incoming connections as a host; Pro, Enterprise, or Education is required for that",
+      "RDP requires a Mac on at least one end",
+      "RDP is only available as a paid third-party add-on on every Windows edition"
+    ],
+    answer: 1,
+    explanation: "Windows Home editions can connect OUT to other RDP hosts, but cannot themselves be connected to — accepting incoming RDP connections requires Windows Pro, Enterprise, or Education. This edition-specific limitation catches many people off guard."
+  },
+  {
+    id: "c2-os-h3",
+    domain: "Operating Systems",
+    difficulty: "hard",
+    question: "What is the key functional difference between the NTFS permissions 'Write' and 'Modify' on a folder?",
+    choices: [
+      "They are identical permissions with different names",
+      "'Write' allows creating files/folders and writing data, but not deleting them; 'Modify' includes everything 'Write' does, plus the ability to delete files/folders",
+      "'Modify' is more restrictive than 'Write'",
+      "'Write' grants full control while 'Modify' does not"
+    ],
+    answer: 1,
+    explanation: "NTFS 'Modify' is essentially 'Write' plus delete capability — a superset relationship that's easy to get backwards when studying the NTFS permission hierarchy."
+  },
+  {
+    id: "c2-os-h4",
+    domain: "Operating Systems",
+    difficulty: "hard",
+    question: "A file with explicit NTFS permissions is COPIED (not moved) from one NTFS folder to a different NTFS folder on the SAME volume. What happens to its permissions?",
+    choices: [
+      "The file always keeps its original explicit permissions",
+      "The file inherits the permissions of the destination folder, since copying applies the destination's permissions rather than preserving the source's",
+      "The file becomes completely inaccessible to everyone",
+      "All permissions are stripped, leaving the file fully open to everyone"
+    ],
+    answer: 1,
+    explanation: "One of the most commonly missed NTFS concepts: COPYING a file — even within the same NTFS volume — makes it inherit the destination folder's permissions. MOVING a file within the same NTFS volume instead RETAINS its original permissions. Copying or moving between different volumes always results in inheriting the destination's permissions."
+  },
+  {
+    id: "c2-os-h5",
+    domain: "Operating Systems",
+    difficulty: "hard",
+    question: "Which Windows Recovery Environment (WinRE) tool specifically targets a corrupted Master Boot Record or Boot Configuration Data (BCD) preventing Windows from starting?",
+    choices: ["System Restore", "Startup Repair, or manually running bootrec commands", "Disk Cleanup", "Task Scheduler"],
+    answer: 1,
+    explanation: "Startup Repair (and manual bootrec commands like /fixmbr, /fixboot, /rebuildbcd) specifically target boot sector and BCD corruption. System Restore instead reverts system files/settings to an earlier point — it doesn't specifically repair the boot process itself."
+  },
+  {
+    id: "c2-os-h6",
+    domain: "Operating Systems",
+    difficulty: "hard",
+    question: "A technician wants a specific standard (non-administrator) user to be able to install printer drivers without providing admin credentials each time, without granting that user full administrator rights. What is an appropriate approach?",
+    choices: [
+      "Add the user to the local Administrators group",
+      "Use the appropriate Group Policy/local security policy setting that allows standard users to install specific driver types, without granting full admin rights",
+      "There is no way to do this without making the user a full administrator",
+      "Disable UAC entirely for all users on the machine"
+    ],
+    answer: 1,
+    explanation: "Windows offers scoped policy settings that let standard users install certain driver types (like signed printer drivers) without needing full administrative rights — a least-privilege alternative to the common but excessive 'just make them an admin' response."
+  },
+  {
+    id: "c2-os-h7",
+    domain: "Operating Systems",
+    difficulty: "hard",
+    question: "Why can a 32-bit (x86) version of Windows typically only recognize about 3.2–3.5GB of RAM, even with 8GB physically installed?",
+    choices: [
+      "32-bit Windows deliberately disables extra RAM for licensing reasons",
+      "A 32-bit address space tops out at 4GB total, and a portion of that space must be reserved for other hardware (like GPU memory-mapped I/O), leaving less than 4GB usable as system RAM",
+      "The extra RAM modules are simply defective",
+      "32-bit Windows requires ECC RAM to access more than 4GB"
+    ],
+    answer: 1,
+    explanation: "32-bit systems are limited to a 4GB address space, and part of that space gets reserved for memory-mapped hardware (such as GPU memory), reducing usable system RAM below 4GB — a math/architecture limitation, not an arbitrary OS restriction or defective hardware."
+  },
+  {
+    id: "c2-os-h8",
+    domain: "Operating Systems",
+    difficulty: "hard",
+    question: "A technician wants a script to run automatically the moment a specific event (such as a failed login) is logged in Windows Event Viewer, rather than on a fixed time schedule. What Task Scheduler capability enables this?",
+    choices: [
+      "Task Scheduler can only trigger tasks on a time-based schedule, never on events",
+      "Task Scheduler supports event-based triggers, letting a task run automatically when a matching event is logged",
+      "This requires a third-party tool, since Windows has no such capability",
+      "This is only possible through Group Policy, not Task Scheduler"
+    ],
+    answer: 1,
+    explanation: "Task Scheduler supports multiple trigger types beyond simple time schedules, including triggering directly off a specific logged event — a lesser-known capability many assume doesn't exist."
+  },
+  {
+    id: "c2-os-h9",
+    domain: "Operating Systems",
+    difficulty: "hard",
+    question: "What is the key difference between 'Sleep' and 'Hibernate' power states, particularly if a laptop's battery fully dies while in that state?",
+    choices: [
+      "They are functionally identical in every way",
+      "Sleep keeps the session in RAM (requiring continuous low power, so a fully dead battery can lose unsaved work); Hibernate writes the session to disk and powers off RAM entirely, making it safe from a full power loss",
+      "Hibernate uses significantly more power than staying fully powered on",
+      "Sleep always conserves more power than Hibernate"
+    ],
+    answer: 1,
+    explanation: "Sleep keeps RAM continuously powered at a low level, so a battery that dies completely during Sleep can lose unsaved session data. Hibernate writes the session to disk first and then cuts power entirely, making it resilient to a total battery drain — an important distinction for laptop troubleshooting."
+  },
+  {
+    id: "c2-os-h10",
+    domain: "Operating Systems",
+    difficulty: "hard",
+    question: "Which Windows 10/11 edition does NOT support joining a traditional on-premises Active Directory domain at all?",
+    choices: ["Windows 10/11 Pro", "Windows 10/11 Enterprise", "Windows 10/11 Home", "Windows 10/11 Education"],
+    answer: 2,
+    explanation: "Windows Home lacks the ability to join a traditional on-premises Active Directory domain. Pro, Enterprise, and Education editions all support domain join — a commonly tested edition limitation."
+  },
+
+  // ---------------- Security (hard) ----------------
+  {
+    id: "c2-sec-h1",
+    domain: "Security",
+    difficulty: "hard",
+    question: "An employee gets a call from someone claiming to be from the IT help desk, who already knows the employee's name, job title, and manager's name (gathered from LinkedIn) and uses those details to convincingly request the employee's password. This technique — fabricating a believable scenario using pre-gathered information — is BEST described as which of the following?",
+    choices: [
+      "Shoulder surfing",
+      "Pretexting, using OSINT (open-source intelligence) to build a believable false scenario",
+      "A brute-force attack",
+      "A man-in-the-middle attack"
+    ],
+    answer: 1,
+    explanation: "Pretexting involves fabricating a plausible scenario — often built from OSINT (publicly available information) — to manipulate a target into divulging information. This differs from shoulder surfing (visual observation), brute-force (systematic password guessing), and man-in-the-middle (intercepting communications)."
+  },
+  {
+    id: "c2-sec-h2",
+    domain: "Security",
+    difficulty: "hard",
+    question: "Which of the following combinations does NOT qualify as true multi-factor authentication (MFA), despite using two separate credentials?",
+    choices: [
+      "A fingerprint scan (something you are) + a hardware token (something you have)",
+      "A password (something you know) + a PIN (something you know)",
+      "A smart card (something you have) + a fingerprint scan (something you are)",
+      "A password (something you know) + a fingerprint scan (something you are)"
+    ],
+    answer: 1,
+    explanation: "True MFA requires factors from at least two DIFFERENT categories (something you know / have / are / do / somewhere you are). A password and a PIN are both 'something you know' — despite being two separate credentials, this does not meet the strict definition of multi-factor authentication, unlike the other combinations which correctly pair different categories."
+  },
+  {
+    id: "c2-sec-h3",
+    domain: "Security",
+    difficulty: "hard",
+    question: "A company's web server is compromised when an attacker inserts malicious SQL commands into a login form's username field to bypass authentication. What category of attack is this?",
+    choices: ["Cross-site scripting (XSS)", "SQL injection", "A denial-of-service attack", "ARP poisoning"],
+    answer: 1,
+    explanation: "SQL injection involves inserting malicious SQL code through user input fields to manipulate or bypass database queries — distinct from XSS (injecting scripts that run in other users' browsers), DoS, or ARP poisoning."
+  },
+  {
+    id: "c2-sec-h4",
+    domain: "Security",
+    difficulty: "hard",
+    question: "Which of the following BEST distinguishes a 'rootkit' from typical 'spyware'?",
+    choices: [
+      "They are functionally identical types of malware",
+      "A rootkit is specifically designed to gain and hide privileged (root/admin-level) access deep within the OS — often modifying system files or the kernel to evade detection — while spyware focuses on covertly collecting user data without necessarily embedding itself at that level",
+      "Spyware always requires admin rights, while rootkits never do",
+      "Rootkits only affect mobile devices"
+    ],
+    answer: 1,
+    explanation: "Rootkits specifically aim for deep, hidden, privileged access (often at the kernel level), making them extremely difficult to detect or remove. Spyware's primary goal is covert data collection/monitoring — an overlapping but functionally distinct malware category."
+  },
+  {
+    id: "c2-sec-h5",
+    domain: "Security",
+    difficulty: "hard",
+    question: "A company's policy requires that when an employee is terminated, their account access be revoked immediately, but their account and associated encryption keys/files should NOT be deleted right away in case of a legal hold. What is the BEST immediate action?",
+    choices: [
+      "Delete the account immediately to eliminate any risk",
+      "Disable (not delete) the account, and consult the organization's data retention/legal hold policy before deleting any data or keys",
+      "Change only the account's password, but leave it fully active",
+      "Take no action until the next scheduled audit"
+    ],
+    answer: 1,
+    explanation: "Disabling — rather than deleting — an account immediately prevents its use while preserving access to data/keys that may be needed later for legal or business reasons, balancing security with retention requirements."
+  },
+  {
+    id: "c2-sec-h6",
+    domain: "Security",
+    difficulty: "hard",
+    question: "A user's browser shows a valid HTTPS padlock icon for a website that is actually a convincing phishing site impersonating their bank. What does this illustrate about HTTPS/SSL certificates?",
+    choices: [
+      "HTTPS guarantees that a website is legitimate and not a phishing site",
+      "A valid HTTPS certificate only confirms the connection is encrypted and matches the presented domain — it does NOT verify that the organization behind that domain is legitimate or trustworthy",
+      "HTTPS cannot be used by phishing sites at all",
+      "The padlock icon means the browser vendor has manually verified the site"
+    ],
+    answer: 1,
+    explanation: "A common misconception is that 'HTTPS = safe.' In reality, basic domain-validated certificates only confirm encryption and domain match — attackers can easily obtain valid certificates for convincing lookalike phishing domains, so the padlock alone doesn't guarantee legitimacy."
+  },
+  {
+    id: "c2-sec-h7",
+    domain: "Security",
+    difficulty: "hard",
+    question: "What is the PRIMARY difference between a virus and a worm?",
+    choices: [
+      "A virus requires a host file/program and typically needs user action to execute and spread; a worm is self-replicating and can spread across networks autonomously, without needing a host file or user action",
+      "A worm requires a host file while a virus does not",
+      "They are the same type of malware with different names",
+      "Only worms can be removed by antivirus software"
+    ],
+    answer: 0,
+    explanation: "This is one of the most commonly confused malware distinctions: viruses need a host file and usually some user action (like opening an infected attachment) to spread, while worms self-propagate across networks entirely on their own."
+  },
+  {
+    id: "c2-sec-h8",
+    domain: "Security",
+    difficulty: "hard",
+    question: "A company wants to ensure that even if an attacker steals its database of hashed passwords, cracking them with precomputed rainbow tables becomes far more difficult. What should be added to each password before hashing?",
+    choices: [
+      "Base64 encoding of the password",
+      "A unique, random 'salt' added to each password before hashing",
+      "Simple compression of the password data",
+      "A plaintext backup copy of the password"
+    ],
+    answer: 1,
+    explanation: "Salting adds unique random data to each password before hashing, so identical passwords produce different hashes — this defeats precomputed rainbow table attacks. It's a specific technique often confused with encryption or basic encoding."
+  },
+  {
+    id: "c2-sec-h9",
+    domain: "Security",
+    difficulty: "hard",
+    question: "What is the key distinction between 'hashing' and 'encryption' as they relate to data security?",
+    choices: [
+      "They are interchangeable terms for the same process",
+      "Hashing is a one-way function producing a fixed-size digest that cannot be reversed to retrieve the original data (used for integrity checks/password storage); encryption is reversible with the correct key and is used to protect confidentiality of data that must later be decrypted",
+      "Encryption is always faster to compute than hashing",
+      "Hashing requires a private key, while encryption does not"
+    ],
+    answer: 1,
+    explanation: "Hashing is intentionally one-way (used for verifying integrity or storing passwords without needing to retrieve the original value), while encryption is designed to be reversed with the correct key when the original data needs to be recovered — a fundamental but frequently confused distinction."
+  },
+  {
+    id: "c2-sec-h10",
+    domain: "Security",
+    difficulty: "hard",
+    question: "Which of the following correctly reflects the standard general sequence of incident response steps?",
+    choices: [
+      "Eradication → Containment → Identification → Recovery",
+      "Identification → Containment → Eradication → Recovery → Lessons Learned",
+      "Recovery → Identification → Containment → Eradication",
+      "Lessons Learned → Identification → Containment → Recovery"
+    ],
+    answer: 1,
+    explanation: "The standard incident response order is: Preparation, Identification, Containment, Eradication, Recovery, and Lessons Learned. The other orderings scramble this sequence in ways that would leave a threat unconfined or unidentified before acting on it."
+  },
+
+  // ---------------- Software Troubleshooting (hard) ----------------
+  {
+    id: "c2-st-h1",
+    domain: "Software Troubleshooting",
+    difficulty: "hard",
+    question: "A Windows PC shows a BSOD with stop code 'CRITICAL_PROCESS_DIED' immediately after a driver update. What is the MOST appropriate immediate remediation step?",
+    choices: [
+      "Reinstall Windows entirely from scratch",
+      "Boot into Safe Mode or use System Restore / Roll Back Driver to revert the specific problematic driver update",
+      "Replace the motherboard",
+      "Run Disk Cleanup"
+    ],
+    answer: 1,
+    explanation: "Since the crash directly correlates with a recent driver update, rolling back that specific driver (or using System Restore) is the targeted fix — a full reinstall or unrelated hardware replacement isn't warranted yet."
+  },
+  {
+    id: "c2-st-h2",
+    domain: "Software Troubleshooting",
+    difficulty: "hard",
+    question: "An application requires .NET Framework 4.8 to run, but an error says a required component is missing — even though a newer version of modern .NET (e.g., .NET 6) is already installed. Why does this happen?",
+    choices: [
+      "Newer .NET versions always automatically satisfy older .NET Framework requirements",
+      ".NET Framework (the legacy, Windows-only framework) and modern .NET (formerly .NET Core, cross-platform) are separate runtime families — having one installed does not fulfill a requirement for the other",
+      "This error indicates a corrupted hard drive",
+      "The application must be reinstalled on an entirely different operating system"
+    ],
+    answer: 1,
+    explanation: "Despite the similar branding, .NET Framework and modern .NET (5/6/7/8+, formerly .NET Core) are distinct runtime families requiring separate installations — a very commonly confused point among both users and technicians."
+  },
+  {
+    id: "c2-st-h3",
+    domain: "Software Troubleshooting",
+    difficulty: "hard",
+    question: "A laptop shows severe visual artifacts in 3D games but the desktop and 2D apps display perfectly fine, and a driver reinstall didn't fix it. What should be suspected NEXT?",
+    choices: [
+      "A failing/overheating dedicated GPU (a hardware fault), since a straightforward software cause has largely been ruled out",
+      "A bad power supply cable",
+      "A corrupted user profile",
+      "An expired antivirus subscription"
+    ],
+    answer: 0,
+    explanation: "Since basic software remediation (a driver reinstall) didn't fix a symptom that only appears under GPU-intensive load, a genuine GPU hardware fault becomes the leading suspect — the other options have no direct relationship to 3D rendering artifacts."
+  },
+  {
+    id: "c2-st-h4",
+    domain: "Software Troubleshooting",
+    difficulty: "hard",
+    question: "After a Windows feature update, a previously working legacy 32-bit application won't open, showing a compatibility error. What should be tried FIRST, before reinstalling or replacing the application?",
+    choices: [
+      "Disk Cleanup",
+      "The application's Compatibility Mode settings (Properties > Compatibility tab), running it as an earlier Windows version",
+      "BitLocker",
+      "Windows Firewall settings"
+    ],
+    answer: 1,
+    explanation: "Compatibility Mode lets a legacy application run under settings that emulate an earlier Windows version — the standard first step for compatibility issues introduced by an update, well before more drastic measures."
+  },
+  {
+    id: "c2-st-h5",
+    domain: "Software Troubleshooting",
+    difficulty: "hard",
+    question: "A technician notices svchost.exe processes consuming unusually high CPU in Task Manager. Since svchost.exe is itself a legitimate core Windows process, how should the technician properly investigate without assuming it's automatically malware?",
+    choices: [
+      "Immediately delete svchost.exe, since any high resource use signals infection",
+      "Use Task Manager's details view or Resource Monitor to identify which specific service running under that svchost.exe instance is responsible, and verify the executable's file path/signature is legitimate (since malware sometimes disguises itself under the same process name)",
+      "Ignore it, since svchost.exe can never be malicious",
+      "Immediately reinstall Windows"
+    ],
+    answer: 1,
+    explanation: "svchost.exe legitimately hosts multiple Windows services, so high usage alone isn't proof of malware. Proper investigation identifies the specific service responsible and confirms the executable is running from its legitimate system location, since malware sometimes impersonates common process names."
+  },
+  {
+    id: "c2-st-h6",
+    domain: "Software Troubleshooting",
+    difficulty: "hard",
+    question: "A spreadsheet application crashes only when opening files with certain complex macros, but opens all other files — including simpler macro-enabled ones — without issue. What is a reasonable, TARGETED next step, rather than reinstalling the whole Office suite?",
+    choices: [
+      "Immediately reinstall the entire Office suite",
+      "Check macro security settings, update the application, and test/repair the specific problematic macro or file, isolating the issue to that macro's complexity/code",
+      "Replace the computer entirely",
+      "Disable the network connection"
+    ],
+    answer: 1,
+    explanation: "Since the crash is isolated to specific complex macros rather than the whole application, targeted troubleshooting of the macro or file is far more efficient and appropriate than a full suite reinstall or unrelated hardware/network changes."
+  },
+  {
+    id: "c2-st-h7",
+    domain: "Software Troubleshooting",
+    difficulty: "hard",
+    question: "Why can clearing a browser's cache and cookies sometimes fix a website displaying outdated or broken content, without needing to reinstall the browser?",
+    choices: [
+      "The browser software itself becomes corrupted every time this happens",
+      "The browser may be loading an older, locally cached version of the page's files instead of fetching updated content from the server",
+      "Cache and cookies have no real effect on how pages display",
+      "This only works if the computer is also restarted afterward"
+    ],
+    answer: 1,
+    explanation: "Browsers cache page resources locally to speed up load times. When a page updates on the server but the browser keeps serving a stale cached copy, clearing the cache forces it to fetch the current version — a simple, often-overlooked fix."
+  },
+  {
+    id: "c2-st-h8",
+    domain: "Software Troubleshooting",
+    difficulty: "hard",
+    question: "A system shows 'STOP: INACCESSIBLE_BOOT_DEVICE' after a recent BIOS change, such as switching the SATA controller mode from IDE to AHCI. What is the MOST likely cause?",
+    choices: [
+      "The GPU driver is outdated",
+      "The OS's boot-critical storage driver configuration doesn't match the newly changed SATA controller mode, so Windows can no longer properly access the boot drive",
+      "The monitor cable is loose",
+      "The network card has failed"
+    ],
+    answer: 1,
+    explanation: "Switching SATA controller modes (e.g., IDE to AHCI) after Windows is already installed, without reconfiguring the storage driver first, is a classic cause of this specific stop error — Windows loaded boot-critical drivers based on the original mode."
+  },
+  {
+    id: "c2-st-h9",
+    domain: "Software Troubleshooting",
+    difficulty: "hard",
+    question: "An application works fine when Technician A is logged in, but immediately crashes when User B logs into their own separate account on the SAME computer. What does this strongly suggest?",
+    choices: [
+      "The application's installation is corrupted for every user on the machine",
+      "The problem is likely isolated to User B's specific profile or per-user application settings, rather than the shared installation itself",
+      "The computer's RAM is failing",
+      "The hard drive is failing"
+    ],
+    answer: 1,
+    explanation: "Since the same application/installation works under one profile but fails under another on the identical machine, the fault is most likely confined to the affected user's profile-specific settings or corrupted per-user configuration files."
+  },
+  {
+    id: "c2-st-h10",
+    domain: "Software Troubleshooting",
+    difficulty: "hard",
+    question: "Which correctly reflects the standard malware removal process, specifically regarding WHEN to disable and later re-enable System Restore?",
+    choices: [
+      "Leave System Restore enabled throughout, then disable it only at the very end",
+      "Investigate/quarantine → disable System Restore → remediate (update and scan) → schedule future scans/updates → re-enable System Restore → educate the end user",
+      "Educate the end user first, then quarantine, then disable System Restore, then remediate",
+      "Remediate first, then quarantine, then disable and re-enable System Restore at the same time"
+    ],
+    answer: 1,
+    explanation: "System Restore should be disabled early (right after quarantining) so the malware doesn't get preserved inside a restore point, and only re-enabled after remediation is complete — reversing this order risks the infection surviving in a saved restore point."
+  },
+
+  // ---------------- Operational Procedures (hard) ----------------
+  {
+    id: "c2-op-h1",
+    domain: "Operational Procedures",
+    difficulty: "hard",
+    question: "A technician must dispose of old hard drives containing sensitive customer financial data. Simply deleting files or running a quick format is considered insufficient. Which method provides the HIGHEST assurance the data is unrecoverable, especially if the drives will be resold or reused?",
+    choices: [
+      "A quick format only",
+      "Multiple-pass secure data wiping or degaussing, or physical destruction (shredding) if the drives won't be reused",
+      "Moving the files to the Recycle Bin and emptying it",
+      "Renaming the files with random names"
+    ],
+    answer: 1,
+    explanation: "Deleting files or quick-formatting a drive doesn't erase the underlying data — it only removes file table references. True data destruction requires secure multi-pass wiping, degaussing (for magnetic media), or physical destruction for the highest level of assurance."
+  },
+  {
+    id: "c2-op-h2",
+    domain: "Operational Procedures",
+    difficulty: "hard",
+    question: "Which statement BEST distinguishes an 'incremental backup' from a 'differential backup,' specifically regarding restoration?",
+    choices: [
+      "They are identical in every respect",
+      "An incremental backup captures only changes since the LAST backup (full or incremental) and requires the full backup PLUS every subsequent incremental to restore; a differential backup captures changes since the LAST FULL backup and requires only the full backup plus the SINGLE most recent differential",
+      "A differential backup is always smaller in size than an incremental backup",
+      "An incremental backup never requires a full backup to restore from"
+    ],
+    answer: 1,
+    explanation: "This is one of the most commonly confused backup concepts: incremental backups chain together (all must be restored in sequence along with the full backup), while differential backups only require the original full backup plus the latest single differential — trading storage efficiency (incremental) for restore simplicity (differential)."
+  },
+  {
+    id: "c2-op-h3",
+    domain: "Operational Procedures",
+    difficulty: "hard",
+    question: "A technician needs to make an emergency after-hours repair that requires briefly taking down a critical production server. What should still generally be followed, even in this after-hours situation, whenever possible?",
+    choices: [
+      "No documentation is needed since it's happening outside business hours",
+      "The organization's change management process — including a change request/approval and rollback plan — should still be followed, using expedited/emergency change procedures if the situation truly requires it",
+      "Only verbal approval from a coworker is needed",
+      "Change management applies only during normal business hours"
+    ],
+    answer: 1,
+    explanation: "Change management applies regardless of the time of day. Even urgent, after-hours changes should go through an expedited approval process with a documented rollback plan, rather than being made informally with no process at all."
+  },
+  {
+    id: "c2-op-h4",
+    domain: "Operational Procedures",
+    difficulty: "hard",
+    question: "Under what circumstance is a technician justified in bypassing standard change management to make an unapproved change to a production system?",
+    choices: [
+      "Whenever they personally judge it's the right call",
+      "Only under a legitimate, organization-defined emergency change procedure, which still requires documentation even if approval is retroactive/expedited",
+      "Any time it's simply more convenient",
+      "Change management can always be skipped for minor changes"
+    ],
+    answer: 1,
+    explanation: "Organizations typically define formal emergency change procedures for urgent situations, but these still require documentation and retroactive review — arbitrary personal judgment to skip the process entirely isn't an accepted justification."
+  },
+  {
+    id: "c2-op-h5",
+    domain: "Operational Procedures",
+    difficulty: "hard",
+    question: "During a repair, a technician discovers a workstation storing unencrypted regulated health records (subject to HIPAA) in an unauthorized location. What is the MOST appropriate action?",
+    choices: [
+      "Ignore it, since resolving the original repair ticket is the only priority",
+      "Report the finding through the organization's proper compliance/incident reporting channels, since this represents a potential regulatory violation in addition to the original repair task",
+      "Delete the records immediately to eliminate the risk",
+      "Copy the records to a personal device for safekeeping"
+    ],
+    answer: 1,
+    explanation: "Discovering a potential regulatory compliance issue obligates the technician to report it through the proper channels — not ignore it, destroy potential evidence, or handle sensitive data outside established policy."
+  },
+  {
+    id: "c2-op-h6",
+    domain: "Operational Procedures",
+    difficulty: "hard",
+    question: "Which licensing model allows an organization to install software across a defined NUMBER of devices/seats, regardless of which specific machines, rather than being tied to one physical device?",
+    choices: [
+      "OEM licensing, tied to specific hardware",
+      "A volume/site license permitting installation across a set number of seats within the organization",
+      "A personal-use, single-device retail license",
+      "An open-source license, which carries no licensing terms at all"
+    ],
+    answer: 1,
+    explanation: "Volume/site licensing allows flexible deployment across a defined number of seats or devices — unlike OEM licensing (bound to specific hardware) or a basic single-device retail license — and open-source software still carries its own license terms even though it's free."
+  },
+  {
+    id: "c2-op-h7",
+    domain: "Operational Procedures",
+    difficulty: "hard",
+    question: "An organization's incident response plan requires preserving 'chain of custody' for evidence in a security investigation. Which practice BEST supports a valid chain of custody?",
+    choices: [
+      "Allowing several people to handle the evidence informally, without tracking",
+      "Documenting exactly who accessed or handled the evidence, when, and what actions were taken, at every step, with signatures/logs",
+      "Only documenting the initial discovery, with no further tracking needed",
+      "Relying on verbal recollection of the handling process if it's ever needed later"
+    ],
+    answer: 1,
+    explanation: "A valid chain of custody requires a complete, signed/logged record of every person who handled the evidence and what they did at each step. Informal handling or relying on memory later undermines the evidence's integrity for legal purposes."
+  },
+  {
+    id: "c2-op-h8",
+    domain: "Operational Procedures",
+    difficulty: "hard",
+    question: "Beyond a UPS providing short-term battery backup, which component is typically used to power critical servers through an EXTENDED outage that lasts longer than the UPS batteries can sustain?",
+    choices: [
+      "A second identical UPS wired in series",
+      "A generator (commonly diesel or natural gas) that automatically starts when utility power fails, taking over once the UPS has bridged the initial gap",
+      "A voltage regulator alone",
+      "A second network switch"
+    ],
+    answer: 1,
+    explanation: "A UPS typically provides only minutes of battery power to bridge the gap until a generator can start and take over for sustained outages — a generator, not simply another UPS, is the standard solution for extended power loss."
+  },
+  {
+    id: "c2-op-h9",
+    domain: "Operational Procedures",
+    difficulty: "hard",
+    question: "While actively assisting a customer in person, a technician's personal phone rings. What is the MOST professional way to handle this?",
+    choices: [
+      "Answer immediately and have a full conversation while the customer waits",
+      "Let the call go to voicemail if possible, or briefly and politely excuse yourself only if truly urgent, prioritizing the customer's time",
+      "Ignore the customer entirely and text back instead, without any acknowledgment",
+      "Make the customer wait indefinitely with no explanation at all"
+    ],
+    answer: 1,
+    explanation: "Professional customer service standards prioritize the current customer's time. Personal calls should generally be deferred, and any necessary interruption should include a brief, polite acknowledgment rather than ignoring the customer altogether."
+  },
+  {
+    id: "c2-op-h10",
+    domain: "Operational Procedures",
+    difficulty: "hard",
+    question: "A server room's environmental policy keeps humidity within a moderate range (roughly 40–60%) rather than as low as possible. Why is EXCESSIVELY LOW humidity also a concern, not just high humidity?",
+    choices: [
+      "Low humidity has no effect on equipment at all",
+      "Excessively low humidity increases the risk of electrostatic discharge (ESD), which can damage sensitive components, while excessively high humidity risks condensation and corrosion",
+      "Low humidity only affects human comfort, never equipment",
+      "Low humidity always improves equipment lifespan with no downsides"
+    ],
+    answer: 1,
+    explanation: "Humidity control cuts both ways: too high risks condensation and corrosion, but too low increases static electricity buildup and ESD risk — which is why data centers target a moderate humidity range instead of simply minimizing humidity."
   }
 ];
